@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "193310380995",
+    "firebase_url": "https://ezscore-dcd70.firebaseio.com",
+    "project_id": "ezscore-dcd70",
+    "storage_bucket": "ezscore-dcd70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193310380995:android:55b719d264326ab4",
+        "android_client_info": {
+          "package_name": "pineapple.ezscore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193310380995-hqg7bco506pgf4bhbbm82d6pflbdrmel.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pineapple.ezscore",
+            "certificate_hash": "6dadd132bfbe854862370e702a4e77b0b4058744"
+          }
+        },
+        {
+          "client_id": "193310380995-v4pfd38154kfcl6i8p60n9gic2j1bkre.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5nFHqmkui5g18kbWKygfwfkNNwoyAJ8M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193310380995-v4pfd38154kfcl6i8p60n9gic2j1bkre.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
