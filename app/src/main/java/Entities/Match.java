@@ -5,13 +5,22 @@ package Entities;
  */
 
 public class Match {
+    private String $key;
     private String team1;
     private String team2;
     private String startTime;
-    private int team1Score;
-    private int team2Score;
+    private Long team1Score;
+    private Long team2Score;
 
     public Match() {
+    }
+
+    public String get$key() {
+        return $key;
+    }
+
+    public void set$key(String $key) {
+        this.$key = $key;
     }
 
     public String getTeam1() {
@@ -38,19 +47,24 @@ public class Match {
         this.startTime = startTime;
     }
 
-    public int getTeam1Score() {
+    public Long getTeam1Score() {
         return team1Score;
     }
 
-    public void setTeam1Score(int team1Score) {
+    public void setTeam1Score(Long team1Score) {
         this.team1Score = team1Score;
     }
 
-    public int getTeam2Score() {
+    public Long getTeam2Score() {
         return team2Score;
     }
 
-    public void setTeam2Score(int team2Score) {
+    public void setTeam2Score(Long team2Score) {
         this.team2Score = team2Score;
+    }
+
+    @Override
+    public String toString() {
+        return team1 + " " + team1Score + " - " + team2Score + " " + team2;
     }
 }

@@ -3,6 +3,9 @@ package pineapple.ezscore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -11,31 +14,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
 import Entities.Match;
 import Gateways.MatchGateway;
+import Repositories.MatchRepository;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ListView list;
+    private MatchRepository mr;
     private DatabaseReference dr;
-    private static final String TAG = "MainActivity";
-    private TextView txt1;
-    private TextView txt2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        list = (ListView) findViewById(R.id.list);
+
+        mr = new MatchRepository();
+
+        final ArrayAdapter<Match> adapter = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, mr.getMatches());
+
         dr = FirebaseDatabase.getInstance().getReference("matches");
-
-        txt1 = (TextView) findViewById(R.id.txt1);
-        txt2 = (TextView) findViewById(R.id.txt2);
-
         dr.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //txt1.setText(dataSnapshot.child("-KgnHNI2vLgUhm7kcFFH").getValue());
-                //txt2.setText(dataSnapshot.toString());
-                showData(dataSnapshot);
+                list.setAdapter(adapter);
             }
 
             @Override
@@ -45,21 +51,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
-    private void showData(DataSnapshot dataSnapshot) {
-        for (DataSnapshot ds: dataSnapshot.getChildren()) {
-            Match match = new Match();
-            match.setTeam1(ds.child("-KgnHNI2vLgUhm7kcFFH").getValue(Match.class).getTeam1());
-            match.setTeam2(ds.child("-KgnHNI2vLgUhm7kcFFH").getValue(Match.class).getTeam2());
-
-            Log.d(TAG, "showData: team1: " + match.getTeam1());
-            Log.d(TAG, "showData: team2: " + match.getTeam2());
-
-            txt1.setText(match.getTeam1());
-            txt2.setText(match.getTeam2());
-        }
-
-
-    }
 }
