@@ -62,9 +62,4 @@ public class Match {
     public void setTeam2Score(Long team2Score) {
         this.team2Score = team2Score;
     }
-
-    @Override
-    public String toString() {
-        return team1 + " " + team1Score + " - " + team2Score + " " + team2;
-    }
 }
