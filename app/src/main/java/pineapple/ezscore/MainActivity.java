@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("Works!");
                         break;
                     case "logout":
-                        System.out.println("Works!");
+                        mAuth.signOut();
                         break;
                     case "login":
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
