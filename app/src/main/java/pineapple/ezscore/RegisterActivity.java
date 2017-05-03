@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText txtEmail;
     private EditText txtPassword;
     private Button btnSignUp;
+    private TextView txtLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +31,20 @@ public class RegisterActivity extends AppCompatActivity {
         txtEmail = (EditText) findViewById(R.id.input_email);
         txtPassword = (EditText) findViewById(R.id.input_password);
         btnSignUp = (Button) findViewById(R.id.btn_signup);
+        txtLogin = (TextView) findViewById(R.id.link_login);
+
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 register(txtEmail.getText().toString(), txtPassword.getText().toString());
             }
         });
-
+        txtLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            }
+        });
     }
 
     private void register(String email, String password) {

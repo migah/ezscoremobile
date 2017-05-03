@@ -1,13 +1,18 @@
 package Adapters;
 
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -21,9 +26,13 @@ import pineapple.ezscore.R;
 public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHolder>{
 
     private List<Match> lMatches;
+    private FirebaseStorage storage;
+    private StorageReference strRef;
 
     public MatchAdapter (List<Match> _lMatches) {
         this.lMatches = _lMatches;
+        storage = FirebaseStorage.getInstance();
+        strRef = storage.getReferenceFromUrl("gs://ezscore-dcd70.appspot.com/");
     }
 
     @Override
@@ -39,11 +48,18 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
     }
 
     @Override
-    public void onBindViewHolder(MatchViewHolder holder, int position) {
+    public void onBindViewHolder(MatchViewHolder holder, final int position) {
         holder.team1.setText(lMatches.get(position).getTeam1());
         holder.team1Score.setText(lMatches.get(position).getTeam1Score().toString());
         holder.team2.setText(lMatches.get(position).getTeam2());
         holder.team2Score.setText(lMatches.get(position).getTeam2Score().toString());
+        switch (lMatches.get(position).getSport().getName().toLowerCase()) {
+            case "football":
+                holder.img.setImageResource(R.mipmap.football);
+                break;
+            case "cs:go":
+                holder.img.setImageResource(R.mipmap.csgo);
+        }
     }
 
     @Override
@@ -57,6 +73,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         TextView team1Score;
         TextView team2;
         TextView team2Score;
+        ImageView img;
 
         MatchViewHolder(View itemView) {
             super (itemView);
@@ -65,6 +82,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
             team1Score = (TextView) itemView.findViewById(R.id.team1Score);
             team2 = (TextView) itemView.findViewById(R.id.team2);
             team2Score = (TextView) itemView.findViewById(R.id.team2Score);
+            img = (ImageView) itemView.findViewById(R.id.img);
         }
     }
 

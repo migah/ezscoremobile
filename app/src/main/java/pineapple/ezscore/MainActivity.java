@@ -2,10 +2,13 @@ package pineapple.ezscore;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private ListView mDrawerList;
+    private DrawerLayout drawerLayout;
     private ArrayAdapter<String> mAdapter;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         initAuthListener();
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
         rv = (RecyclerView) findViewById(R.id.rv);
         rv.setHasFixedSize(true);
@@ -65,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        toolbar.inflateMenu(R.menu.toolbar);
+        toolbar.setNavigationIcon(R.mipmap.ic_menu_white_48dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
     }
@@ -98,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (adapterView.getItemAtPosition(i).toString().toLowerCase()) {
                     case "all matches":
-                        System.out.println("Works!");
+                        drawerLayout.closeDrawers();
                         break;
                     case "my matches":
                         System.out.println("Works!");

@@ -68,4 +68,38 @@ public class Match {
     public void setTeam2Score(Long team2Score) {
         this.team2Score = team2Score;
     }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public boolean getisFinished() {
+        return isFinished;
+    }
+
+    public void setisFinished(boolean isFinished) {
+        this.isFinished = isFinished;
+    }
+
+    public Sport getSport() {
+        return sport;
+    }
+
+    public void setSport(Sport sport) {
+        this.sport = sport;
+    }
+
+    public List<Round> getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(List<Round> rounds) {
+        this.rounds = rounds;
+    }
+
+
 }
