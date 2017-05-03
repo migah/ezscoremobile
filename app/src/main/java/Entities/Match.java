@@ -1,11 +1,17 @@
 package Entities;
 
+import java.util.List;
+
 /**
  * Created by rasmusmadsen on 06/04/2017.
  */
 
 public class Match {
     private String $key;
+    private String creatorId;
+    private boolean isFinished;
+    private Sport sport;
+    private List<Round> rounds;
     private String team1;
     private String team2;
     private String startTime;
