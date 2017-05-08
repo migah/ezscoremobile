@@ -49,6 +49,11 @@
         </android.support.v7.widget.AppCompatSpinner>
 
 
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtDate"
+            android:text="Set date"/>
 
     </LinearLayout>
 
