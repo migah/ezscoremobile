@@ -43,4 +43,9 @@ public class Round implements Serializable {
     public void setTeam2score(long team2score) {
         this.team2score = team2score;
     }
+
+    @Override
+    public String toString() {
+        return "(" + getTeam1score() + " - " + getTeam2score() + ")";
+    }
 }
