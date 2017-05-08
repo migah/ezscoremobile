@@ -44,12 +44,7 @@ public class NewMatchActivity extends AppCompatActivity {
         txtDate = (TextView) findViewById(R.id.txtDate);
         txtTime = (TextView) findViewById(R.id.txtTime);
 
-        Sport sport = new Sport();
-        sport.setName("Fodbold");
-
-        Sport[] strings = {sport};
-
-        ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, strings);
+        ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sportRepository.getSports());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

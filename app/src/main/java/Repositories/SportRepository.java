@@ -20,5 +20,7 @@ public class SportRepository {
         return sportGateway.getSports();
     }
 
-
+    public Sport[] getSportsArray() {
+        return sportGateway.getSportsArray();
+    }
 }

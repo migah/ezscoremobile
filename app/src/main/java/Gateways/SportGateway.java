@@ -45,5 +45,8 @@ public class SportGateway {
     public ArrayList<Sport> getSports() {
         return sports;
     }
+    public Sport[] getSportsArray() {
+        return sports.toArray(new Sport[sports.size()]);
+    }
 
 }

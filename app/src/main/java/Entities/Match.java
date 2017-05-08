@@ -20,6 +20,10 @@ public class Match implements Serializable{
     private Long team1Score;
     private Long team2Score;
 
+    public Match() {
+
+    }
+
     public Match(String creatorId, Sport sport, String team1, String team2, String startTime) {
         this.creatorId = creatorId;
         this.sport = sport;
