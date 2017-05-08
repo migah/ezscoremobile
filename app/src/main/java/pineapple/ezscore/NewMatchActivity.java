@@ -16,9 +16,9 @@ import java.util.Locale;
 
 public class NewMatchActivity extends AppCompatActivity {
 
-    Spinner spinner = (Spinner) findViewById(R.id.sports_spinner);
-    Calendar myCalendar = Calendar.getInstance();
-    EditText txtDate = (EditText) findViewById(R.id.txtDate);
+    Spinner spinner;
+    Calendar myCalendar;
+    EditText txtDate;
     Context context;
 
 
@@ -26,6 +26,10 @@ public class NewMatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_match);
+
+        spinner = (Spinner) findViewById(R.id.sports_spinner);
+        myCalendar = Calendar.getInstance();
+        txtDate = (EditText) findViewById(R.id.txtDate);
 
         String[] items = new String[] { "Chai Latte", "Green Tea", "Black Tea" };
 

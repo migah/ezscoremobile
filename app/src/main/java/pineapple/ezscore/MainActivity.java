@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        toolbar.inflateMenu(R.menu.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_menu_white_48dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
