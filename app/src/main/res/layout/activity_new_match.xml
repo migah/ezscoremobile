@@ -40,20 +40,39 @@
                 android:hint="Team 2" />
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatSpinner
+        <Spinner
             android:id="@+id/sports_spinner"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
-        </android.support.v7.widget.AppCompatSpinner>
+            android:layout_margin="20dp">
+        </Spinner>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-        <EditText
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtDate"
-            android:text="Set date"/>
+            android:text="Set date"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_margin="8dp"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTime"
+                android:text="Set time"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_margin="8dp"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
