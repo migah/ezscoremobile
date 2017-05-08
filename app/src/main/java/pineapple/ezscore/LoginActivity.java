@@ -1,5 +1,8 @@
 package pineapple.ezscore;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,12 +25,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtPassword;
     private Button btnLogin;
     private TextView txtSignUp;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        context = this;
 
         txtEmail = (EditText) findViewById(R.id.input_email);
         txtPassword = (EditText) findViewById(R.id.input_password);
@@ -54,7 +60,20 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        if (!task.isSuccessful()) {
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                new AlertDialog.Builder(context)
+                                        .setTitle("Wrong email/password")
+                                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+                            }
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
                     }
                 });
     }
