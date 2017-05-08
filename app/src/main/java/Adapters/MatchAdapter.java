@@ -1,5 +1,7 @@
 package Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,9 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 import Entities.Match;
+import pineapple.ezscore.LoginActivity;
+import pineapple.ezscore.MainActivity;
+import pineapple.ezscore.MatchActivity;
 import pineapple.ezscore.R;
 
 /**
@@ -26,13 +31,12 @@ import pineapple.ezscore.R;
 public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHolder>{
 
     private List<Match> lMatches;
-    private FirebaseStorage storage;
-    private StorageReference strRef;
+    private Context context;
 
-    public MatchAdapter (List<Match> _lMatches) {
+    public MatchAdapter (Context context, List<Match> _lMatches) {
         this.lMatches = _lMatches;
-        storage = FirebaseStorage.getInstance();
-        strRef = storage.getReferenceFromUrl("gs://ezscore-dcd70.appspot.com/");
+        this.context = context;
+
     }
 
     @Override
@@ -60,6 +64,14 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
             case "cs:go":
                 holder.img.setImageResource(R.mipmap.csgo);
         }
+        holder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, MatchActivity.class);
+                i.putExtra("MatchKey", lMatches.get(position).get$key());
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

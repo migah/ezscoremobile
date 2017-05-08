@@ -1,12 +1,13 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by rasmusmadsen on 06/04/2017.
  */
 
-public class Match {
+public class Match implements Serializable{
     private String $key;
     private String creatorId;
     private boolean isFinished;

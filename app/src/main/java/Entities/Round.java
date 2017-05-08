@@ -1,10 +1,12 @@
 package Entities;
 
+import java.io.Serializable;
+
 /**
  * Created by rasmusmadsen on 03/05/2017.
  */
 
-public class Round {
+public class Round implements Serializable {
     private String $key;
     private long roundNo;
     private long team1score;

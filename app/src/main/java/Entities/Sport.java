@@ -1,10 +1,12 @@
 package Entities;
 
+import java.io.Serializable;
+
 /**
  * Created by rasmusmadsen on 03/05/2017.
  */
 
-public class Sport {
+public class Sport implements Serializable {
     private String $key;
     private String img;
     private String name;

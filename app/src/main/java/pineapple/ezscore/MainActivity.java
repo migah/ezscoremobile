@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         final MatchAdapter adbMatch;
 
-        adbMatch = new MatchAdapter (mr.getMatches());
+        adbMatch = new MatchAdapter (this, mr.getMatches());
         rv.setAdapter(adbMatch);
 
         dr = FirebaseDatabase.getInstance().getReference("matches");
