@@ -1,6 +1,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,17 @@ public class Match implements Serializable{
     private Long team1Score;
     private Long team2Score;
 
-    public Match() {
+    public Match(String creatorId, Sport sport, String team1, String team2, String startTime) {
+        this.creatorId = creatorId;
+        this.sport = sport;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.startTime = startTime;
+
+        isFinished = false;
+        rounds = new ArrayList<>();
+        team1Score = Long.parseLong("0");
+        team2Score = Long.parseLong("0");
     }
 
     public String get$key() {

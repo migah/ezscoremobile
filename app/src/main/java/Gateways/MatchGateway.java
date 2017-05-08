@@ -7,8 +7,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import Entities.Match;
 
@@ -19,13 +17,13 @@ import Entities.Match;
 
 public class MatchGateway {
 
-    private DatabaseReference dr;
+    private DatabaseReference databaseReference;
     private ArrayList<Match> matches;
 
     public MatchGateway() {
-        dr = FirebaseDatabase.getInstance().getReference("matches");
+        databaseReference = FirebaseDatabase.getInstance().getReference("matches");
         matches = new ArrayList<>();
-        dr.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 matches.clear();
@@ -50,4 +48,8 @@ public class MatchGateway {
         return matches;
     }
 
+    public void addMatch(Match match) {
+        DatabaseReference ref = databaseReference.push();
+        ref.setValue(match);
+    }
 }

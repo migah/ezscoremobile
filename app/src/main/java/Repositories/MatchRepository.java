@@ -33,4 +33,8 @@ public class MatchRepository {
         }
         return null;
     }
+
+    public void addMatch(Match match) {
+        mg.addMatch(match);
+    }
 }
