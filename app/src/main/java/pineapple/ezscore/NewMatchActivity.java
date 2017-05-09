@@ -13,9 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.Locale;
 
 import Entities.Sport;
@@ -25,33 +33,42 @@ public class NewMatchActivity extends AppCompatActivity {
 
     Spinner spinner;
     Calendar myCalendar;
-
     TextView txtDate;
     Context context;
     TextView txtTime;
 
     SportRepository sportRepository;
-
+    DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_match);
 
         sportRepository = new SportRepository();
-
+        databaseReference = FirebaseDatabase.getInstance().getReference("sport");
         spinner = (Spinner) findViewById(R.id.sports_spinner);
         myCalendar = Calendar.getInstance();
         txtDate = (TextView) findViewById(R.id.txtDate);
         txtTime = (TextView) findViewById(R.id.txtTime);
 
-        ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sportRepository.getSports());
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sportRepository.getSports());
 
-        spinner.setAdapter(adapter);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                spinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         context = this;
-
 
 
 
