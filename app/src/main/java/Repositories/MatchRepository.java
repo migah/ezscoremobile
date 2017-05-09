@@ -1,11 +1,5 @@
 package Repositories;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.List;
 
 import Entities.Match;
@@ -28,7 +22,7 @@ public class MatchRepository {
 
     public Match getMatch(String $key) {
         for (Match match: mg.getMatches()) {
-            if (match.get$key().equals($key))
+            if (match.getId().equals($key))
                 return match;
         }
         return null;

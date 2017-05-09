@@ -2,25 +2,17 @@ package Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import java.util.List;
 
 import Entities.Match;
-import pineapple.ezscore.LoginActivity;
-import pineapple.ezscore.MainActivity;
 import pineapple.ezscore.MatchActivity;
 import pineapple.ezscore.R;
 
@@ -68,7 +60,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, MatchActivity.class);
-                i.putExtra("MatchKey", lMatches.get(position).get$key());
+                i.putExtra("MatchKey", lMatches.get(position).getId());
                 context.startActivity(i);
             }
         });

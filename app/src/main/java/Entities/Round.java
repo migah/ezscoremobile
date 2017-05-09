@@ -7,17 +7,17 @@ import java.io.Serializable;
  */
 
 public class Round implements Serializable {
-    private String $key;
+    private String id;
     private long roundNo;
     private long team1score;
     private long team2score;
 
-    public String get$key() {
-        return $key;
+    public String getId() {
+        return id;
     }
 
-    public void set$key(String $key) {
-        this.$key = $key;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public long getRoundNo() {

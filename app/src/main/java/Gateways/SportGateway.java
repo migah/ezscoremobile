@@ -7,7 +7,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Entities.Sport;
 
@@ -29,7 +28,7 @@ public class SportGateway {
                 sports.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Sport sport = ds.getValue(Sport.class);
-                    sport.set$key(ds.getKey());
+                    sport.setId(ds.getKey());
                     sports.add(sport);
                 }
             }
@@ -44,9 +43,6 @@ public class SportGateway {
 
     public ArrayList<Sport> getSports() {
         return sports;
-    }
-    public Sport[] getSportsArray() {
-        return sports.toArray(new Sport[sports.size()]);
     }
 
 }

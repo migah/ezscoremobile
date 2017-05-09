@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import Adapters.MatchAdapter;
+import Entities.Match;
+import Entities.Sport;
 import Repositories.MatchRepository;
 
 public class MainActivity extends AppCompatActivity {
@@ -90,12 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    System.out.println("IN");
                     String[] mMenuItems = {"All Matches", "My Matches", "Logout"};
                     addDrawerItems(mMenuItems);
                 } else {
                     // No user signed in
-                    System.out.println("OUT");
                     String[] mMenuItems = {"All Matches", "Login"};
                     addDrawerItems(mMenuItems);
                 }

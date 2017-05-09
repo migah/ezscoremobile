@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class Match implements Serializable{
-    private String $key;
+    private String id;
     private String creatorId;
     private boolean isFinished;
     private Sport sport;
@@ -31,18 +31,24 @@ public class Match implements Serializable{
         this.team2 = team2;
         this.startTime = startTime;
 
+        Round round = new Round();
+        round.setRoundNo(1);
+        round.setTeam1score(0);
+        round.setTeam2score(0);
+
         isFinished = false;
         rounds = new ArrayList<>();
+        rounds.add(round);
         team1Score = Long.parseLong("0");
         team2Score = Long.parseLong("0");
     }
 
-    public String get$key() {
-        return $key;
+    public String getId() {
+        return id;
     }
 
-    public void set$key(String $key) {
-        this.$key = $key;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTeam1() {

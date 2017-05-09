@@ -7,16 +7,16 @@ import java.io.Serializable;
  */
 
 public class Sport implements Serializable {
-    private String $key;
+    private String id;
     private String img;
     private String name;
 
-    public String get$key() {
-        return $key;
+    public String getId() {
+        return id;
     }
 
-    public void set$key(String $key) {
-        this.$key = $key;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getImg() {

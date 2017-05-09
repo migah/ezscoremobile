@@ -28,13 +28,11 @@ public class MatchGateway {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 matches.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
                     Match match = ds.getValue(Match.class);
-                    match.set$key(ds.getKey());
+                    match.setId(ds.getKey());
 
                     matches.add(match);
                 }
-
             }
 
             @Override
@@ -49,7 +47,6 @@ public class MatchGateway {
     }
 
     public void addMatch(Match match) {
-        DatabaseReference ref = databaseReference.push();
-        ref.setValue(match);
+        databaseReference.child(databaseReference.push().getKey()).setValue(match);
     }
 }
