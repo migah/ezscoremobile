@@ -49,4 +49,12 @@ public class MatchGateway {
     public void addMatch(Match match) {
         databaseReference.child(databaseReference.push().getKey()).setValue(match);
     }
+
+    public void updateMatch(Match match, String matchId) {
+        databaseReference.child(matchId).setValue(match);
+    }
+
+    public void removeMatch(String matchId) {
+        databaseReference.child(matchId).removeValue();
+    }
 }

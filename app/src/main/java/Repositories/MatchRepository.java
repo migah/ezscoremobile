@@ -31,4 +31,14 @@ public class MatchRepository {
     public void addMatch(Match match) {
         mg.addMatch(match);
     }
+
+    public void updateMatch(Match match) {
+        String matchId = match.getId();
+        match.setId(null);
+        mg.updateMatch(match, matchId);
+    }
+
+    public void removeMatch(String matchId) {
+        mg.removeMatch(matchId);
+    }
 }

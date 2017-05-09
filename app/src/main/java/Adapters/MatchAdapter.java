@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import Entities.Match;
+import Repositories.MatchRepository;
 import pineapple.ezscore.MatchActivity;
 import pineapple.ezscore.R;
 
@@ -28,7 +29,6 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
     public MatchAdapter (Context context, List<Match> _lMatches) {
         this.lMatches = _lMatches;
         this.context = context;
-
     }
 
     @Override
