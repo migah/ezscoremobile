@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -17,16 +18,18 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Date;
 
+import Entities.Match;
 import Entities.Sport;
+import Repositories.MatchRepository;
 import Repositories.SportRepository;
 
 public class NewMatchActivity extends AppCompatActivity {
@@ -36,21 +39,34 @@ public class NewMatchActivity extends AppCompatActivity {
     TextView txtDate;
     Context context;
     TextView txtTime;
+    Button btnSubmit;
+    EditText input_team1;
+    EditText input_team2;
 
     SportRepository sportRepository;
+    MatchRepository matchRepository;
     DatabaseReference databaseReference;
+    FirebaseAuth firebaseAuth;
+
+    private int matchHour;
+    private int matchMinute;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_match);
 
         sportRepository = new SportRepository();
+        matchRepository = new MatchRepository();
         databaseReference = FirebaseDatabase.getInstance().getReference("sport");
+        firebaseAuth = FirebaseAuth.getInstance();
         spinner = (Spinner) findViewById(R.id.sports_spinner);
         myCalendar = Calendar.getInstance();
         txtDate = (TextView) findViewById(R.id.txtDate);
         txtTime = (TextView) findViewById(R.id.txtTime);
-
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        input_team1 = (EditText) findViewById(R.id.input_team1);
+        input_team2 = (EditText) findViewById(R.id.input_team2);
 
         final ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sportRepository.getSports());
 
@@ -70,7 +86,27 @@ public class NewMatchActivity extends AppCompatActivity {
 
         context = this;
 
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String creatorId = firebaseAuth.getCurrentUser().getUid();
+                Sport sport = (Sport) spinner.getSelectedItem();
+                String team1 = input_team1.getText().toString();
+                String team2 = input_team2.getText().toString();
 
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                Calendar calendar = myCalendar;
+                calendar.set(Calendar.HOUR_OF_DAY, matchHour);
+                calendar.set(Calendar.MINUTE, matchMinute);
+
+                String startTime = dateFormat.format(calendar.getTime());
+
+                Match match = new Match(creatorId,sport,team1, team2, startTime);
+
+                matchRepository.addMatch(match);
+
+            }
+        });
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -100,13 +136,15 @@ public class NewMatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                final int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         txtTime.setText( selectedHour + ":" + selectedMinute);
+                        matchHour = selectedHour;
+                        matchMinute = selectedMinute;
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");

@@ -29,12 +29,14 @@ public class MatchRepository {
     }
 
     public void addMatch(Match match) {
+        match.getSport().setId(null);
         mg.addMatch(match);
     }
 
     public void updateMatch(Match match) {
         String matchId = match.getId();
         match.setId(null);
+        match.getSport().setId(null);
         mg.updateMatch(match, matchId);
     }
 
