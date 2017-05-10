@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 import Entities.Match;
 import Repositories.MatchRepository;
 import pineapple.ezscore.MatchActivity;
+import pineapple.ezscore.MatchEditActivity;
 import pineapple.ezscore.R;
 
 /**
@@ -25,10 +28,12 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
 
     private List<Match> lMatches;
     private Context context;
+    private FirebaseAuth firebaseAuth;
 
     public MatchAdapter (Context context, List<Match> _lMatches) {
         this.lMatches = _lMatches;
         this.context = context;
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -59,9 +64,23 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, MatchActivity.class);
-                i.putExtra("MatchKey", lMatches.get(position).getId());
-                context.startActivity(i);
+                try {
+                    if (lMatches.get(position).getCreatorId().equals(firebaseAuth.getCurrentUser().getUid())) {
+                        System.out.println("Right user");
+                        Intent i = new Intent(context, MatchEditActivity.class);
+                        i.putExtra("MatchKey", lMatches.get(position).getId());
+                        context.startActivity(i);
+                    } else {
+                        Intent i = new Intent(context, MatchActivity.class);
+                        i.putExtra("MatchKey", lMatches.get(position).getId());
+                        context.startActivity(i);
+                    }
+                } catch (NullPointerException ex) {
+                    Intent i = new Intent(context, MatchActivity.class);
+                    i.putExtra("MatchKey", lMatches.get(position).getId());
+                    context.startActivity(i);
+                }
+
             }
         });
     }

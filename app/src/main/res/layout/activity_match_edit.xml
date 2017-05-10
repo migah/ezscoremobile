@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/matchLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/toolbar_layout"
+            android:id="@+id/matchToolbar"/>
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/matchToolbar"
+            android:textSize="24sp"
+            android:layout_margin="5dp"
+            android:layout_centerHorizontal="true"
+            android:text="StartTime/Live!/Over"/>
+
+        <TextView
+            android:id="@+id/inputTeam1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTime"
+            android:textSize="24sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:text="Team1"/>
+
+        <EditText
+            android:id="@+id/inputTeam1Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTime"
+            android:layout_alignParentEnd="true"
+            android:textSize="24sp"
+            android:layout_marginEnd="5dp"
+            android:inputType="number"
+            android:text="Team1Score"/>
+
+        <EditText
+            android:id="@+id/inputTeam2Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputTeam1Score"
+            android:layout_alignParentEnd="true"
+            android:textSize="24sp"
+            android:layout_marginEnd="5dp"
+            android:inputType="number"
+            android:text="Team2Score"/>
+
+        <TextView
+            android:id="@+id/inputTeam2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputTeam1"
+            android:textSize="24sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="5dp"
+            android:text="Team2"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Round"
+            android:id="@+id/btnAddRound"
+            android:layout_below="@+id/inputTeam2"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/btnAddRound"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:id="@+id/roundLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update Round"
+                    android:id="@+id/btnUpdateRound" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Round Done"
+                    android:id="@+id/btnRoundDone" />
+
+                <TextView
+                    android:id="@+id/inputRoundTeam1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnUpdateRound"
+                    android:textSize="24sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="5dp"
+                    android:text="Team1"/>
+
+                <EditText
+                    android:id="@+id/inputRoundTeam1Score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnRoundDone"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="24sp"
+                    android:layout_marginEnd="5dp"
+                    android:inputType="number"
+                    android:text="0"/>
+
+                <EditText
+                    android:id="@+id/inputRoundTeam2Score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputRoundTeam1Score"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="24sp"
+                    android:layout_marginEnd="5dp"
+                    android:inputType="number"
+                    android:text="0"/>
+
+                <TextView
+                    android:id="@+id/inputRoundTeam2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputRoundTeam1"
+                    android:textSize="24sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:text="Team2"/>
+
+            </RelativeLayout>
+
+
+            <ListView
+                android:id="@+id/listRounds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </ListView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Match"
+                android:id="@+id/btnUpdateMatch"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ListView android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#ffffff" />
+
+</android.support.v4.widget.DrawerLayout>

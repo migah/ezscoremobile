@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         initAuthListener();
 
+        if (getIntent().getSerializableExtra("logout") != null && (boolean) getIntent().getSerializableExtra("logout")) {
+            mAuth.signOut();
+        }
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         break;
                     case "my matches":
-                        System.out.println("Works!");
+                        startActivity(new Intent(MainActivity.this, MyMatchesActivity.class));
                         break;
                     case "logout":
                         mAuth.signOut();

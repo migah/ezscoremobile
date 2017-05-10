@@ -19,7 +19,9 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MatchActivity" />
-        <activity android:name=".NewMatchActivity"></activity>
+        <activity android:name=".NewMatchActivity" />
+        <activity android:name=".MyMatchesActivity" />
+        <activity android:name=".MatchEditActivity"></activity>
     </application>
 
 </manifest>

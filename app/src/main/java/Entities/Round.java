@@ -12,6 +12,14 @@ public class Round implements Serializable {
     private long team1score;
     private long team2score;
 
+    public Round() {}
+
+    public Round(long roundNo) {
+        this.roundNo = roundNo;
+        team1score = 0;
+        team2score = 0;
+    }
+
     public String getId() {
         return id;
     }
