@@ -3,6 +3,7 @@ package pineapple.ezscore;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
@@ -104,6 +105,8 @@ public class NewMatchActivity extends AppCompatActivity {
                 Match match = new Match(creatorId,sport,team1, team2, startTime);
 
                 matchRepository.addMatch(match);
+
+                startActivity(new Intent(NewMatchActivity.this, MyMatchesActivity.class));
 
             }
         });
