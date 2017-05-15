@@ -27,6 +27,7 @@ import Entities.Match;
 import Entities.Round;
 import Repositories.MatchRepository;
 import Utilities.DateFormatter;
+import Utilities.DrawerListStuff;
 
 public class MatchActivity extends AppCompatActivity {
 
@@ -40,6 +41,7 @@ public class MatchActivity extends AppCompatActivity {
     private TextView txtTeam1Score;
     private TextView txtTeam2Score;
     private ListView listRounds;
+    private ListView drawerList;
 
     private String matchKey;
     private Match match;
@@ -62,6 +64,7 @@ public class MatchActivity extends AppCompatActivity {
         txtTeam1Score = (TextView) findViewById(R.id.txtTeam1Score);
         txtTeam2Score = (TextView) findViewById(R.id.txtTeam2Score);
         listRounds = (ListView) findViewById(R.id.listRounds);
+        drawerList = (ListView) findViewById(R.id.matchViewDrawer);
 
         context = this;
 
@@ -88,6 +91,9 @@ public class MatchActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        drawerList.setAdapter(DrawerListStuff.getAdapter(this));
+        drawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
     }
 
     private void setDatabaseReference() {

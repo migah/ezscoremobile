@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import Entities.Match;
 import Entities.Sport;
 import Repositories.MatchRepository;
 import Repositories.SportRepository;
+import Utilities.DrawerListStuff;
 
 public class NewMatchActivity extends AppCompatActivity {
 
@@ -43,6 +45,8 @@ public class NewMatchActivity extends AppCompatActivity {
     Button btnSubmit;
     EditText input_team1;
     EditText input_team2;
+
+    ListView drawerList;
 
     SportRepository sportRepository;
     MatchRepository matchRepository;
@@ -68,6 +72,7 @@ public class NewMatchActivity extends AppCompatActivity {
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         input_team1 = (EditText) findViewById(R.id.input_team1);
         input_team2 = (EditText) findViewById(R.id.input_team2);
+        drawerList = (ListView) findViewById(R.id.newMatchDrawer);
 
         final ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sportRepository.getSports());
 
@@ -152,6 +157,9 @@ public class NewMatchActivity extends AppCompatActivity {
                 mTimePicker.show();
             }
         });
+
+        drawerList.setAdapter(DrawerListStuff.getAdapter(this));
+        drawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
     }
 
     private void updateLabel() {

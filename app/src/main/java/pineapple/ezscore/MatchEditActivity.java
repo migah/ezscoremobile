@@ -21,6 +21,7 @@ import Entities.Match;
 import Entities.Round;
 import Repositories.MatchRepository;
 import Utilities.DateFormatter;
+import Utilities.DrawerListStuff;
 
 public class MatchEditActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class MatchEditActivity extends AppCompatActivity {
     private Button btnUpdateMatch;
     private Button btnAddRound;
     private ListView listRounds;
+    private ListView drawerList;
 
     private RelativeLayout roundLayout;
     private Button btnUpdateRound;
@@ -55,6 +57,7 @@ public class MatchEditActivity extends AppCompatActivity {
         initVariables();
         fillInputs();
         initButtons();
+        initDrawer();
     }
 
     private void initVariables() {
@@ -73,6 +76,7 @@ public class MatchEditActivity extends AppCompatActivity {
         txtRoundTeam2 = (TextView) findViewById(R.id.inputRoundTeam2);
         inputRoundTeam1Score = (EditText) findViewById(R.id.inputRoundTeam1Score);
         inputRoundTeam2Score = (EditText) findViewById(R.id.inputRoundTeam2Score);
+        drawerList = (ListView) findViewById(R.id.matchEditDrawer);
 
         matchRepository = new MatchRepository();
         matchKey = (String) getIntent().getSerializableExtra("MatchKey");
@@ -148,5 +152,10 @@ public class MatchEditActivity extends AppCompatActivity {
         match.setTeam1Score(Long.parseLong(inputTeam1Score.getText().toString()));
         match.setTeam2Score(Long.parseLong(inputTeam2Score.getText().toString()));
         matchRepository.updateMatch(match);
+    }
+
+    private void initDrawer() {
+        drawerList.setAdapter(DrawerListStuff.getAdapter(this));
+        drawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
     }
 }
