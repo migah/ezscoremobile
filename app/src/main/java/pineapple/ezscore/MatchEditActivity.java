@@ -57,7 +57,7 @@ public class MatchEditActivity extends AppCompatActivity {
         initVariables();
         fillInputs();
         initButtons();
-        initDrawer();
+        drawerList = DrawerListStuff.initList(this, drawerList);
     }
 
     private void initVariables() {
@@ -154,8 +154,5 @@ public class MatchEditActivity extends AppCompatActivity {
         matchRepository.updateMatch(match);
     }
 
-    private void initDrawer() {
-        drawerList.setAdapter(DrawerListStuff.getAdapter(this));
-        drawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
-    }
+
 }

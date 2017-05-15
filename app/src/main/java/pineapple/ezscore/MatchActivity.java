@@ -92,8 +92,7 @@ public class MatchActivity extends AppCompatActivity {
             }
         });
 
-        drawerList.setAdapter(DrawerListStuff.getAdapter(this));
-        drawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
+        drawerList = DrawerListStuff.initList(this, drawerList);
     }
 
     private void setDatabaseReference() {

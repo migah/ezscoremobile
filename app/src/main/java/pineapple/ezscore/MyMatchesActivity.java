@@ -45,7 +45,7 @@ public class MyMatchesActivity extends AppCompatActivity {
 
         initVariables();
         initRecyclerView();
-        initDrawer();
+        drawerList = DrawerListStuff.initList(this, drawerList);
         initListeners();
         initToolbar();
     }
@@ -95,8 +95,5 @@ public class MyMatchesActivity extends AppCompatActivity {
         });
     }
 
-    private void initDrawer() {
-        drawerList.setAdapter(DrawerListStuff.getAdapter(this));
-        drawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
-    }
+
 }

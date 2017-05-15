@@ -85,13 +85,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mDrawerList.setAdapter(DrawerListStuff.getAdapter(this));
-        mDrawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
-
-        LayoutInflater inflater = getLayoutInflater();
-
-        View view = inflater.inflate(R.layout.header_view, null, false);
-
-        mDrawerList.addHeaderView(view);
+        mDrawerList = DrawerListStuff.initList(this, mDrawerList);
     }
 }
