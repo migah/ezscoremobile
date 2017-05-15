@@ -22,7 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import Adapters.MatchAdapter;
+import Utilities.DrawerListStuff;
+import Utilities.MatchAdapter;
 import Entities.Match;
 import Repositories.MatchRepository;
 
@@ -92,30 +93,10 @@ public class MyMatchesActivity extends AppCompatActivity {
 
             }
         });
-        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (adapterView.getItemAtPosition(i).toString().toLowerCase()) {
-                    case "all matches":
-                        startActivity(new Intent(MyMatchesActivity.this, MainActivity.class));
-                        break;
-                    case "my matches":
-                        layout.closeDrawers();
-                        break;
-                    case "logout":
-                        Intent intent = new Intent(MyMatchesActivity.this, MainActivity.class);
-                        intent.putExtra("logout", true);
-                        startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
     }
 
     private void initDrawer() {
-        String[] menuItems = {"All Matches", "My Matches", "Logout"};
-        drawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuItems));
+        drawerList.setAdapter(DrawerListStuff.getAdapter(this));
+        drawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
     }
 }

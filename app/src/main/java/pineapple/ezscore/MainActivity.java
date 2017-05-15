@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,9 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import Adapters.MatchAdapter;
-import Entities.Match;
-import Entities.Sport;
+import Utilities.DrawerListStuff;
+import Utilities.MatchAdapter;
 import Repositories.MatchRepository;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,11 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private MatchRepository mr;
     private DatabaseReference dr;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private ListView mDrawerList;
     private DrawerLayout drawerLayout;
-    private ArrayAdapter<String> mAdapter;
     private Toolbar toolbar;
 
     @Override
@@ -45,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        initAuthListener();
 
         if (getIntent().getSerializableExtra("logout") != null && (boolean) getIntent().getSerializableExtra("logout")) {
             mAuth.signOut();
@@ -87,64 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-    }
 
-    private void initAuthListener() {
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    String[] mMenuItems = {"All Matches", "My Matches", "Logout"};
-                    addDrawerItems(mMenuItems);
-                } else {
-                    // No user signed in
-                    String[] mMenuItems = {"All Matches", "Login"};
-                    addDrawerItems(mMenuItems);
-                }
-            }
-        };
-    }
+        mDrawerList.setAdapter(DrawerListStuff.getAdapter(this));
+        mDrawerList.setOnItemClickListener(DrawerListStuff.drawerClickListener(this));
 
-    private void addDrawerItems(String[] mMenuItems) {
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mMenuItems);
-        mDrawerList.setAdapter(mAdapter);
+        LayoutInflater inflater = getLayoutInflater();
 
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (adapterView.getItemAtPosition(i).toString().toLowerCase()) {
-                    case "all matches":
-                        drawerLayout.closeDrawers();
-                        break;
-                    case "my matches":
-                        startActivity(new Intent(MainActivity.this, MyMatchesActivity.class));
-                        break;
-                    case "logout":
-                        mAuth.signOut();
-                        break;
-                    case "login":
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-    }
+        View view = inflater.inflate(R.layout.header_view, null, false);
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
+        mDrawerList.addHeaderView(view);
     }
 }

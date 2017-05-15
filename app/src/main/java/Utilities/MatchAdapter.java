@@ -1,4 +1,4 @@
-package Adapters;
+package Utilities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 import Entities.Match;
-import Repositories.MatchRepository;
 import pineapple.ezscore.MatchActivity;
 import pineapple.ezscore.MatchEditActivity;
 import pineapple.ezscore.R;

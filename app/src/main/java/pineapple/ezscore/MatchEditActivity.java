@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import Entities.Match;
 import Entities.Round;
 import Repositories.MatchRepository;
+import Utilities.DateFormatter;
 
 public class MatchEditActivity extends AppCompatActivity {
 
@@ -83,7 +84,7 @@ public class MatchEditActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 match = matchRepository.getMatch(matchKey);
-                txtTime.setText(match.getStartTime());
+                txtTime.setText(DateFormatter.getDate(match));
                 txtTeam1.setText(match.getTeam1());
                 txtTeam2.setText(match.getTeam2());
                 inputTeam1Score.setText(match.getTeam1Score().toString());

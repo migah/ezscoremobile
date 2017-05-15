@@ -26,6 +26,7 @@ import java.util.Date;
 import Entities.Match;
 import Entities.Round;
 import Repositories.MatchRepository;
+import Utilities.DateFormatter;
 
 public class MatchActivity extends AppCompatActivity {
 
@@ -96,7 +97,7 @@ public class MatchActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 match = matchRepository.getMatch(matchKey);
-                txtTime.setText(getTime());
+                txtTime.setText(DateFormatter.getDate(match));
                 txtTeam1.setText(match.getTeam1());
                 txtTeam2.setText(match.getTeam2());
                 txtTeam1Score.setText(match.getTeam1Score().toString());
@@ -111,31 +112,5 @@ public class MatchActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private String getTime() {
-        //TODO
-        //2017-04-26T20:45
-        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-        Date date;
-        Date dateNow = new Date();
-        try {
-            date = parser.parse(match.getStartTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "Error converting time";
-        }
-
-        if (match.getisFinished()) {
-            return "Finished";
-        }
-
-        if (date.after(dateNow)) {
-            return "Starting later";
-        } else if (date.before(dateNow)) {
-            return "Live!";
-        }
-
-        return "Error calculating time";
     }
 }
