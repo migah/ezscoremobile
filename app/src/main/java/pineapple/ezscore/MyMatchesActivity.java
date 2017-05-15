@@ -46,7 +46,7 @@ public class MyMatchesActivity extends AppCompatActivity {
 
         initVariables();
         initRecyclerView();
-        drawerList = DrawerListStuff.initList(this, drawerList);
+        drawerList = DrawerListStuff.initList(this, this, drawerList);
         initListeners();
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
         toolbar.inflateMenu(R.menu.toolbar);

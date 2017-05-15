@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {git
                 register(txtEmail.getText().toString(), txtPassword.getText().toString());
             }
         });

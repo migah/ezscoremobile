@@ -1,7 +1,9 @@
 package Utilities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +32,13 @@ public class DrawerListStuff {
 
     private final static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    public static ListView initList(Context context, ListView listView) {
+
+    public static ListView initList(Context context, Activity activity, ListView listView) {
         listView.setAdapter(getAdapter(context));
         listView.setOnItemClickListener(drawerClickListener(context));
         listView.addHeaderView(getHeaderView(context));
+        setUserName(activity);
+
         return listView;
     }
 
@@ -81,6 +86,13 @@ public class DrawerListStuff {
     private static View getHeaderView(final Context context){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return inflater.inflate(R.layout.header_view, null, false);
+    }
+
+    private static void setUserName(Activity activity){
+        TextView txtUserEmail = (TextView) activity.findViewById(R.id.txtUserEmail);
+        if (mAuth.getCurrentUser() != null) {
+            txtUserEmail.setText(mAuth.getCurrentUser().getEmail());
+        }
     }
 
 

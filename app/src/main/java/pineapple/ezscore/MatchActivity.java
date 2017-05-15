@@ -64,7 +64,7 @@ public class MatchActivity extends AppCompatActivity {
         setDatabaseReference();
 
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, matchLayout);
-        drawerList = DrawerListStuff.initList(this, drawerList);
+        drawerList = DrawerListStuff.initList(this, this, drawerList);
     }
 
     private void setDatabaseReference() {

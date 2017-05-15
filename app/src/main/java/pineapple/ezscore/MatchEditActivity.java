@@ -63,7 +63,7 @@ public class MatchEditActivity extends AppCompatActivity {
         initVariables();
         fillInputs();
         initButtons();
-        drawerList = DrawerListStuff.initList(this, drawerList);
+        drawerList = DrawerListStuff.initList(this, this, drawerList);
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
     }
 

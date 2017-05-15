@@ -166,7 +166,7 @@ public class NewMatchActivity extends AppCompatActivity {
             }
         });
 
-        drawerList = DrawerListStuff.initList(this, drawerList);
+        drawerList = DrawerListStuff.initList(this,this, drawerList);
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
     }
 
