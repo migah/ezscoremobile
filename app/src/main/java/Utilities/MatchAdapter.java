@@ -1,6 +1,8 @@
 package Utilities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 import Entities.Match;
+import Repositories.MatchRepository;
 import pineapple.ezscore.MatchActivity;
 import pineapple.ezscore.MatchEditActivity;
 import pineapple.ezscore.R;
@@ -28,11 +31,13 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
     private List<Match> lMatches;
     private Context context;
     private FirebaseAuth firebaseAuth;
+    private MatchRepository matchRepository;
 
     public MatchAdapter (Context context, List<Match> _lMatches) {
         this.lMatches = _lMatches;
         this.context = context;
         firebaseAuth = FirebaseAuth.getInstance();
+        matchRepository = new MatchRepository();
     }
 
     @Override
@@ -80,6 +85,27 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
                     context.startActivity(i);
                 }
 
+            }
+        });
+        holder.cv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (lMatches.get(position).getCreatorId().equals(firebaseAuth.getCurrentUser().getUid())) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Are you sure you want to delete this match?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    matchRepository.removeMatch(lMatches.get(position).getId());
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+                return true;
             }
         });
     }

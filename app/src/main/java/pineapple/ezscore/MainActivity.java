@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import Utilities.DrawerListStuff;
 import Utilities.MatchAdapter;
 import Repositories.MatchRepository;
+import Utilities.ToolbarInitializer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,14 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        toolbar.setNavigationIcon(R.mipmap.ic_menu_white_48dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
+        toolbar = ToolbarInitializer.initToolbar(this, toolbar, drawerLayout);
         mDrawerList = DrawerListStuff.initList(this, mDrawerList);
     }
 }

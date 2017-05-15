@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,9 +36,12 @@ import Entities.Sport;
 import Repositories.MatchRepository;
 import Repositories.SportRepository;
 import Utilities.DrawerListStuff;
+import Utilities.ToolbarInitializer;
 
 public class NewMatchActivity extends AppCompatActivity {
 
+    DrawerLayout layout;
+    Toolbar toolbar;
     Spinner spinner;
     Calendar myCalendar;
     TextView txtDate;
@@ -65,6 +70,9 @@ public class NewMatchActivity extends AppCompatActivity {
         matchRepository = new MatchRepository();
         databaseReference = FirebaseDatabase.getInstance().getReference("sport");
         firebaseAuth = FirebaseAuth.getInstance();
+
+        layout = (DrawerLayout) findViewById(R.id.newMatchLayout);
+        toolbar = (Toolbar) findViewById(R.id.new_match_toolbar);
         spinner = (Spinner) findViewById(R.id.sports_spinner);
         myCalendar = Calendar.getInstance();
         txtDate = (TextView) findViewById(R.id.txtDate);
@@ -159,6 +167,7 @@ public class NewMatchActivity extends AppCompatActivity {
         });
 
         drawerList = DrawerListStuff.initList(this, drawerList);
+        toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
     }
 
     private void updateLabel() {

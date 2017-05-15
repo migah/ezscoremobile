@@ -26,6 +26,7 @@ import Utilities.DrawerListStuff;
 import Utilities.MatchAdapter;
 import Entities.Match;
 import Repositories.MatchRepository;
+import Utilities.ToolbarInitializer;
 
 public class MyMatchesActivity extends AppCompatActivity {
 
@@ -47,7 +48,8 @@ public class MyMatchesActivity extends AppCompatActivity {
         initRecyclerView();
         drawerList = DrawerListStuff.initList(this, drawerList);
         initListeners();
-        initToolbar();
+        toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
+        toolbar.inflateMenu(R.menu.toolbar);
     }
 
     private void initVariables() {
@@ -61,17 +63,8 @@ public class MyMatchesActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("matches");
     }
 
-    private void initToolbar() {
-        toolbar.setNavigationIcon(R.mipmap.ic_menu_white_48dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layout.openDrawer(GravityCompat.START);
-            }
-        });
-    }
-
     private void initRecyclerView() {
+        myMatches.clear();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         for (Match match : matchRepository.getMatches()) {
             if (match.getCreatorId().equals(firebaseAuth.getCurrentUser().getUid())) {
@@ -94,6 +87,4 @@ public class MyMatchesActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

@@ -1,14 +1,10 @@
 package pineapple.ezscore;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,15 +15,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import Entities.Match;
 import Entities.Round;
 import Repositories.MatchRepository;
 import Utilities.DateFormatter;
 import Utilities.DrawerListStuff;
+import Utilities.ToolbarInitializer;
 
 public class MatchActivity extends AppCompatActivity {
 
@@ -70,28 +63,7 @@ public class MatchActivity extends AppCompatActivity {
 
         setDatabaseReference();
 
-        toolbar.inflateMenu(R.menu.toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_menu_white_48dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                matchLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getTitle().toString().toLowerCase()) {
-                    case "add match":
-                        startActivity(new Intent(MatchActivity.this, NewMatchActivity.class));
-                        break;
-                    default:
-                        return false;
-                }
-                return true;
-            }
-        });
-
+        toolbar = ToolbarInitializer.initToolbar(this, toolbar, matchLayout);
         drawerList = DrawerListStuff.initList(this, drawerList);
     }
 

@@ -1,8 +1,10 @@
 package pineapple.ezscore;
 
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,9 +24,12 @@ import Entities.Round;
 import Repositories.MatchRepository;
 import Utilities.DateFormatter;
 import Utilities.DrawerListStuff;
+import Utilities.ToolbarInitializer;
 
 public class MatchEditActivity extends AppCompatActivity {
 
+    private DrawerLayout layout;
+    private Toolbar toolbar;
     private TextView txtTime;
     private TextView txtTeam1;
     private TextView txtTeam2;
@@ -58,9 +63,12 @@ public class MatchEditActivity extends AppCompatActivity {
         fillInputs();
         initButtons();
         drawerList = DrawerListStuff.initList(this, drawerList);
+        toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
     }
 
     private void initVariables() {
+        layout = (DrawerLayout) findViewById(R.id.matchLayout);
+        toolbar = (Toolbar) findViewById(R.id.matchToolbar);
         txtTime = (TextView) findViewById(R.id.txtTime);
         txtTeam1 = (TextView) findViewById(R.id.inputTeam1);
         txtTeam2 = (TextView) findViewById(R.id.inputTeam2);
