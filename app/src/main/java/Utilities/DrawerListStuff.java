@@ -28,21 +28,19 @@ import pineapple.ezscore.R;
 
 public class DrawerListStuff {
 
-
-
     private final static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
 
     public static ListView initList(Context context, Activity activity, ListView listView) {
         listView.setAdapter(getAdapter(context));
         listView.setOnItemClickListener(drawerClickListener(context));
-        listView.addHeaderView(getHeaderView(context));
-        setUserName(activity);
+
+        if (mAuth.getCurrentUser() != null) {
+            listView.addHeaderView(getHeaderView(context));
+            setUserName(activity);
+        }
 
         return listView;
     }
-
-
 
     private static ArrayAdapter<String> getAdapter(final Context context) {
         FirebaseUser user = mAuth.getCurrentUser();
@@ -94,6 +92,4 @@ public class DrawerListStuff {
             txtUserEmail.setText(mAuth.getCurrentUser().getEmail());
         }
     }
-
-
 }
