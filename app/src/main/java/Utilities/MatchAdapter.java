@@ -48,8 +48,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
     @Override
     public MatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
-        MatchViewHolder mvh = new MatchViewHolder(v);
-        return mvh;
+        return new MatchViewHolder(v);
     }
 
     @Override

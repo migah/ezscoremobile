@@ -43,6 +43,7 @@ public class MatchEditActivity extends AppCompatActivity {
     private RelativeLayout roundLayout;
     private Button btnUpdateRound;
     private Button btnRoundDone;
+    private Button btnMatchDone;
     private TextView txtRoundTeam1;
     private TextView txtRoundTeam2;
     private EditText inputRoundTeam1Score;
@@ -75,6 +76,7 @@ public class MatchEditActivity extends AppCompatActivity {
         inputTeam1Score = (EditText) findViewById(R.id.inputTeam1Score);
         inputTeam2Score = (EditText) findViewById(R.id.inputTeam2Score);
         btnUpdateMatch = (Button) findViewById(R.id.btnUpdateMatch);
+        btnMatchDone = (Button) findViewById(R.id.btnMatchEnd);
         btnAddRound = (Button) findViewById(R.id.btnAddRound);
         listRounds = (ListView) findViewById(R.id.listRounds);
         roundLayout = (RelativeLayout) findViewById(R.id.roundLayout);
@@ -119,7 +121,6 @@ public class MatchEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateMatch();
-                startActivity(new Intent(MatchEditActivity.this, MyMatchesActivity.class));
             }
         });
         btnAddRound.setOnClickListener(new View.OnClickListener() {
@@ -154,12 +155,20 @@ public class MatchEditActivity extends AppCompatActivity {
                 roundLayout.setVisibility(View.GONE);
             }
         });
+        btnMatchDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                match.setisFinished(true);
+                updateMatch();
+            }
+        });
     }
 
     private void updateMatch() {
         match.setTeam1Score(Long.parseLong(inputTeam1Score.getText().toString()));
         match.setTeam2Score(Long.parseLong(inputTeam2Score.getText().toString()));
         matchRepository.updateMatch(match);
+        startActivity(new Intent(MatchEditActivity.this, MyMatchesActivity.class));
     }
 
 

@@ -1,22 +1,14 @@
 package pineapple.ezscore;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,9 +22,9 @@ import Utilities.ToolbarInitializer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView rv;
-    private MatchRepository mr;
-    private DatabaseReference dr;
+    private RecyclerView recyclerView;
+    private MatchRepository matchRepository;
+    private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
 
     private ListView mDrawerList;
@@ -43,33 +35,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAuth = FirebaseAuth.getInstance();
 
+        mAuth = FirebaseAuth.getInstance();
         if (getIntent().getSerializableExtra("logout") != null && (boolean) getIntent().getSerializableExtra("logout")) {
             mAuth.signOut();
         }
 
+        initVariables();
+        initDatabaseReference();
+    }
+
+    private void initVariables() {
+        recyclerView = (RecyclerView) findViewById(R.id.rv);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = DrawerListStuff.initList(this, mDrawerList);
+
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar = ToolbarInitializer.initToolbar(this, toolbar, drawerLayout);
 
-        rv = (RecyclerView) findViewById(R.id.rv);
-        rv.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
+        databaseReference = FirebaseDatabase.getInstance().getReference("matches");
 
-        mr = new MatchRepository();
+        matchRepository = new MatchRepository();
+    }
 
-        final MatchAdapter adbMatch;
-
-        adbMatch = new MatchAdapter (this, mr.getMatches());
-        rv.setAdapter(adbMatch);
-
-        dr = FirebaseDatabase.getInstance().getReference("matches");
-        dr.addValueEventListener(new ValueEventListener() {
+    private void initDatabaseReference() {
+        final MatchAdapter adbMatch = new MatchAdapter (this, matchRepository.getMatches());
+        recyclerView.setAdapter(adbMatch);
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                rv.setAdapter(adbMatch);
+                recyclerView.setAdapter(adbMatch);
             }
 
             @Override
@@ -77,8 +77,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        toolbar = ToolbarInitializer.initToolbar(this, toolbar, drawerLayout);
-        mDrawerList = DrawerListStuff.initList(this, mDrawerList);
     }
 }
