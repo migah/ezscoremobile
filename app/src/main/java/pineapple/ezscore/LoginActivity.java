@@ -40,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (txtEmail.getText().toString().equals("") || txtPassword.getText().toString().equals("")) {
+                    return;
+                }
                 login(txtEmail.getText().toString(), txtPassword.getText().toString());
             }
         });
@@ -72,7 +75,9 @@ public class LoginActivity extends AppCompatActivity {
                                         .show();
                             }
                         } else {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                         }
                     }
                 });
