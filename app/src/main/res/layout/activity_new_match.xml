@@ -82,6 +82,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:id="@+id/btnLocation"
+            android:text="Add location"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:id="@+id/btnSubmit"
             android:text="Add match"/>
 

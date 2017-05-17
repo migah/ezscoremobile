@@ -1,5 +1,6 @@
 package pineapple.ezscore;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -36,6 +37,7 @@ import Entities.Sport;
 import Repositories.MatchRepository;
 import Repositories.SportRepository;
 import Utilities.DrawerListStuff;
+import Utilities.GPSManager;
 import Utilities.ToolbarInitializer;
 
 public class NewMatchActivity extends AppCompatActivity {
@@ -46,10 +48,13 @@ public class NewMatchActivity extends AppCompatActivity {
     Calendar myCalendar;
     TextView txtDate;
     Context context;
+    Activity activity;
     TextView txtTime;
     Button btnSubmit;
+    Button btnLocation;
     EditText input_team1;
     EditText input_team2;
+
 
     ListView drawerList;
 
@@ -81,6 +86,7 @@ public class NewMatchActivity extends AppCompatActivity {
         input_team1 = (EditText) findViewById(R.id.input_team1);
         input_team2 = (EditText) findViewById(R.id.input_team2);
         drawerList = (ListView) findViewById(R.id.newMatchDrawer);
+        btnLocation = (Button) findViewById(R.id.btnLocation);
 
         final ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sportRepository.getSports());
 
@@ -99,6 +105,16 @@ public class NewMatchActivity extends AppCompatActivity {
         });
 
         context = this;
+        activity = this;
+
+        btnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GPSManager gpsManager = new GPSManager(context, activity);
+                System.out.println(gpsManager.getDeviceLocation());
+                //startActivity(new Intent(NewMatchActivity.this, MapsActivity.class));
+            }
+        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
