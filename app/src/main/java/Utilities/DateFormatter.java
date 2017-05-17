@@ -15,6 +15,9 @@ public class DateFormatter {
     private static SimpleDateFormat formattedDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
     private static SimpleDateFormat prettyDateFormatter = new SimpleDateFormat("EEEE dd/MM HH:mm");
 
+    private static final String LIVE = "Live!";
+    private static final String FINISHED = "Finished";
+
     public static String getDate(Match match) {
         String returnString = "";
         Date date = null;
@@ -32,12 +35,23 @@ public class DateFormatter {
         Date dateNow = new Date();
 
         if (match.getisFinished()) {
-            return "Finished";
+            return LIVE;
         }
         if (date.before(dateNow)) {
-            return "Live!";
+            return FINISHED;
         }
 
         return returnString;
+    }
+
+    public static String getState(Match match) {
+        switch (getDate(match)) {
+            case LIVE:
+                return MatchStates.LIVE;
+            case FINISHED:
+                return MatchStates.RESULTS;
+            default:
+                return MatchStates.STARTING_LATER;
+        }
     }
 }

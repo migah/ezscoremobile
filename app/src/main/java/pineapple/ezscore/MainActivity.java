@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,9 +16,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+import Entities.Match;
+import Utilities.DateFormatter;
 import Utilities.DrawerListStuff;
 import Utilities.MatchAdapter;
 import Repositories.MatchRepository;
+import Utilities.MatchStates;
 import Utilities.ToolbarInitializer;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
 
+    private String matchState;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         initVariables();
-        initDatabaseReference();
+        initListeners();
     }
 
     private void initVariables() {
@@ -57,19 +65,46 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, drawerLayout);
-
+        toolbar.inflateMenu(R.menu.sort_toolbar);
         databaseReference = FirebaseDatabase.getInstance().getReference("matches");
 
         matchRepository = new MatchRepository();
+
+        matchState = MatchStates.ALL;
     }
 
     private void initDatabaseReference() {
-        final MatchAdapter adbMatch = new MatchAdapter (this, matchRepository.getMatches());
+        ArrayList<Match> matches = new ArrayList<>();
+
+        for (Match match : matchRepository.getMatches()) {
+            if (matchState.equals(MatchStates.ALL)) {
+                matches.add(match);
+            } else if (matchState.equals(MatchStates.RESULTS) && DateFormatter.getState(match).equals(MatchStates.RESULTS)) {
+                matches.add(match);
+            } else if (matchState.equals(MatchStates.LIVE) && DateFormatter.getState(match).equals(MatchStates.LIVE)) {
+                matches.add(match);
+            } else if (matchState.equals(MatchStates.STARTING_LATER) && DateFormatter.getState(match).equals(MatchStates.STARTING_LATER)) {
+                matches.add(match);
+            }
+        }
+
+        final MatchAdapter adbMatch = new MatchAdapter (this, matches);
         recyclerView.setAdapter(adbMatch);
+    }
+
+    private void initListeners() {
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                matchState = item.getTitle().toString().toLowerCase();
+                initDatabaseReference();
+                return true;
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                recyclerView.setAdapter(adbMatch);
+                initDatabaseReference();
             }
 
             @Override
