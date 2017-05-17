@@ -1,16 +1,11 @@
 package pineapple.ezscore;
 
-import android.content.Intent;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +44,7 @@ public class MyMatchesActivity extends AppCompatActivity {
         drawerList = DrawerListStuff.initList(this, this, drawerList);
         initListeners();
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
-        toolbar.inflateMenu(R.menu.toolbar);
+        toolbar.inflateMenu(R.menu.add_match_toolbar);
     }
 
     private void initVariables() {
