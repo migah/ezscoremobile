@@ -122,6 +122,13 @@
 
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Round"
+                    android:textSize="24sp" />
+
+                <TextView
                     android:id="@+id/inputRoundTeam1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

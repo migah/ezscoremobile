@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,6 +56,8 @@ public class MatchEditActivity extends AppCompatActivity {
     private MatchRepository matchRepository;
     private DatabaseReference databaseReference;
 
+    private long roundNo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +90,7 @@ public class MatchEditActivity extends AppCompatActivity {
         inputRoundTeam1Score = (EditText) findViewById(R.id.inputRoundTeam1Score);
         inputRoundTeam2Score = (EditText) findViewById(R.id.inputRoundTeam2Score);
         drawerList = (ListView) findViewById(R.id.matchEditDrawer);
+        roundNo = 0;
 
         matchRepository = new MatchRepository();
         matchKey = (String) getIntent().getSerializableExtra("MatchKey");
@@ -136,6 +140,7 @@ public class MatchEditActivity extends AppCompatActivity {
                 }
                 i++;
                 round = new Round(i);
+                roundNo = round.getRoundNo();
                 match.getRounds().add(round);
                 matchRepository.updateMatch(match);
             }
@@ -143,9 +148,7 @@ public class MatchEditActivity extends AppCompatActivity {
         btnUpdateRound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                match.getRounds().get((int)round.getRoundNo() - 1).setTeam1score(Long.parseLong(inputRoundTeam1Score.getText().toString()));
-                match.getRounds().get((int)round.getRoundNo() - 1).setTeam2score(Long.parseLong(inputRoundTeam2Score.getText().toString()));
-                matchRepository.updateMatch(match);
+                updateRound((int) roundNo);
             }
         });
         btnRoundDone.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +165,17 @@ public class MatchEditActivity extends AppCompatActivity {
                 updateMatch();
             }
         });
+        listRounds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Round round = match.getRounds().get(i);
+                btnAddRound.setVisibility(View.GONE);
+                roundLayout.setVisibility(View.VISIBLE);
+                inputRoundTeam1Score.setText(round.getTeam1score() + "");
+                inputRoundTeam2Score.setText(round.getTeam2score() + "");
+                roundNo = round.getRoundNo();
+            }
+        });
     }
 
     private void updateMatch() {
@@ -171,5 +185,10 @@ public class MatchEditActivity extends AppCompatActivity {
         startActivity(new Intent(MatchEditActivity.this, MyMatchesActivity.class));
     }
 
+    private void updateRound(int roundNo) {
+        match.getRounds().get(roundNo - 1).setTeam1score(Long.parseLong(inputRoundTeam1Score.getText().toString()));
+        match.getRounds().get(roundNo - 1).setTeam2score(Long.parseLong(inputRoundTeam2Score.getText().toString()));
+        matchRepository.updateMatch(match);
+    }
 
 }
