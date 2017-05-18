@@ -170,7 +170,11 @@ public class NewMatchActivity extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        txtTime.setText( selectedHour + ":" + selectedMinute);
+                        if (selectedMinute < 10) {
+                            txtTime.setText(selectedHour + ":" + selectedMinute + "0");
+                        } else {
+                            txtTime.setText(selectedHour + ":" + selectedMinute);
+                        }
                         matchHour = selectedHour;
                         matchMinute = selectedMinute;
                     }
