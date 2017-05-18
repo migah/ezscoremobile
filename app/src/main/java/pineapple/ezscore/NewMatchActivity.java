@@ -1,7 +1,5 @@
 package pineapple.ezscore;
 
-import android.*;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -16,14 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -34,9 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Date;
-
 import Entities.Match;
+import Entities.MatchLocation;
 import Entities.Sport;
 import Repositories.MatchRepository;
 import Repositories.SportRepository;
@@ -46,33 +41,41 @@ import Utilities.ToolbarInitializer;
 
 public class NewMatchActivity extends AppCompatActivity {
 
-    DrawerLayout layout;
-    Toolbar toolbar;
-    Spinner spinner;
-    Calendar myCalendar;
-    TextView txtDate;
-    Context context;
-    TextView txtTime;
-    Button btnSubmit;
-    Button btnLocation;
-    EditText input_team1;
-    EditText input_team2;
+    private DrawerLayout layout;
+    private Toolbar toolbar;
+    private Spinner spinner;
+    private Calendar myCalendar;
+    private TextView txtDate;
+    private Context context;
+    private TextView txtTime;
+    private Button btnSubmit;
+    private Button btnLocation;
+    private EditText input_team1;
+    private EditText input_team2;
 
-    ListView drawerList;
+    private ListView drawerList;
 
-    SportRepository sportRepository;
-    MatchRepository matchRepository;
-    DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth;
+    private SportRepository sportRepository;
+    private MatchRepository matchRepository;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
 
     private int matchHour;
     private int matchMinute;
+
+    private MatchLocation location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_match);
+        initVariables();
+        checkPermissions();
+        initSpinner();
+        initListeners();
+    }
 
+    private void initVariables() {
         sportRepository = new SportRepository();
         matchRepository = new MatchRepository();
         databaseReference = FirebaseDatabase.getInstance().getReference("sport");
@@ -90,36 +93,24 @@ public class NewMatchActivity extends AppCompatActivity {
         drawerList = (ListView) findViewById(R.id.newMatchDrawer);
         btnLocation = (Button) findViewById(R.id.btnLocation);
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
-
-        final ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sportRepository.getSports());
-
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                spinner.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        location = null;
         context = this;
 
+        drawerList = DrawerListStuff.initList(this,this, drawerList);
+        toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
+    }
+
+    private void initListeners() {
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GPSManager gpsManager = new GPSManager(context);
-                System.out.println(gpsManager.getDeviceLocation());
+                String longitude = String.valueOf(gpsManager.getDeviceLocation().getLongitude());
+                String latitude = String.valueOf(gpsManager.getDeviceLocation().getLatitude());
+                location = new MatchLocation(latitude, longitude);
+                System.out.println(latitude + ", " + longitude);
             }
         });
-
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +126,13 @@ public class NewMatchActivity extends AppCompatActivity {
 
                 String startTime = dateFormat.format(calendar.getTime());
 
-                Match match = new Match(creatorId,sport,team1, team2, startTime);
+                Match match = new Match();
+
+                if (location == null) {
+                    match = new Match(creatorId,sport,team1, team2, startTime);
+                } else {
+                    match = new Match(creatorId,sport,team1, team2, startTime, location);
+                }
 
                 matchRepository.addMatch(match);
 
@@ -143,7 +140,6 @@ public class NewMatchActivity extends AppCompatActivity {
 
             }
         });
-
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -156,16 +152,14 @@ public class NewMatchActivity extends AppCompatActivity {
             }
 
         };
-
         txtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                }
+            }
         });
-
         txtTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,9 +179,28 @@ public class NewMatchActivity extends AppCompatActivity {
                 mTimePicker.show();
             }
         });
+    }
 
-        drawerList = DrawerListStuff.initList(this,this, drawerList);
-        toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
+    private void initSpinner() {
+        final ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sportRepository.getSports());
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                spinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void checkPermissions() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
     }
 
     private void updateLabel() {
