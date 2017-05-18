@@ -88,8 +88,9 @@ public class MatchActivity extends AppCompatActivity {
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", Float.parseFloat(match.getLocation().getLatitude()), Float.parseFloat(match.getLocation().getLongitude()));
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                Float latitude = Float.parseFloat(match.getLocation().getLatitude());
+                Float longitude = Float.parseFloat(match.getLocation().getLongitude());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:<" + latitude + ">,<" + longitude + " >?q=<" + latitude + ">,<" + longitude + ">(Match+Location)"));
                 context.startActivity(intent);
             }
         });
