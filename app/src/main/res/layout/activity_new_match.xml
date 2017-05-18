@@ -60,9 +60,8 @@
             android:id="@+id/txtDate"
             android:text="Set date"
             android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_margin="8dp"
-            />
+            android:textSize="20sp"
+            android:layout_margin="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,10 +70,8 @@
                 android:text="Set time"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_margin="8dp"/>
-
-
 
         </RelativeLayout>
 
@@ -84,6 +81,15 @@
             android:layout_margin="20dp"
             android:id="@+id/btnLocation"
             android:text="Add location"/>
+
+        <TextView
+            android:id="@+id/txtLocationAdded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
         <Button
             android:layout_width="match_parent"

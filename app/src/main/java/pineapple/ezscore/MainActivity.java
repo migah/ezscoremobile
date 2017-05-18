@@ -44,13 +44,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkSignOut();
+        initVariables();
+        initListeners();
+    }
+
+    private void checkSignOut() {
         mAuth = FirebaseAuth.getInstance();
         if (getIntent().getSerializableExtra("logout") != null && (boolean) getIntent().getSerializableExtra("logout")) {
             mAuth.signOut();
         }
-
-        initVariables();
-        initListeners();
     }
 
     private void initVariables() {

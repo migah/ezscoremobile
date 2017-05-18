@@ -21,10 +21,31 @@ public class GPSManager {
     private LocationManager locationManager;
     private Context context;
 
+    private static final String TIME = "10000";
+
     public GPSManager(Context context) {
         this.context = context;
 
-        LocationListener locationListener = new LocationListener() {
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Long.parseLong(TIME), Float.MIN_VALUE, getLocationListenter());
+
+        if (checkPermission()) {
+            deviceLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+    }
+
+    public Location getDeviceLocation(){
+        return deviceLocation;
+    }
+
+    private boolean checkPermission(){
+        String permission = "android.permission.ACCESS_FINE_LOCATION";
+        int res = context.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private LocationListener getLocationListenter() {
+        return new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 deviceLocation = location;
@@ -45,22 +66,5 @@ public class GPSManager {
 
             }
         };
-
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Long.parseLong("10"), Float.MIN_VALUE, locationListener);
-
-        if (checkPermission()) {
-            deviceLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-    }
-
-    public Location getDeviceLocation(){
-        return deviceLocation;
-    }
-
-    private boolean checkPermission(){
-        String permission = "android.permission.ACCESS_FINE_LOCATION";
-        int res = context.checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
     }
 }

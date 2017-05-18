@@ -34,7 +34,6 @@ public class MatchGateway {
                     matches.add(match);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 

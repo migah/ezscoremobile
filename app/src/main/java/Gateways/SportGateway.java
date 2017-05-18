@@ -38,7 +38,6 @@ public class SportGateway {
 
             }
         });
-
     }
 
     public ArrayList<Sport> getSports() {

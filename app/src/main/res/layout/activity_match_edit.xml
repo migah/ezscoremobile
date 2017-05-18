@@ -85,24 +85,46 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-                <Button
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Update Round"
-                    android:id="@+id/btnUpdateRound" />
+                    android:layout_below="@+id/inputRoundTeam2Score">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="Round Done"
-                    android:id="@+id/btnRoundDone" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Update Round"
+                            android:id="@+id/btnUpdateRound" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Round Done"
+                            android:id="@+id/btnRoundDone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/inputRoundTeam1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnUpdateRound"
                     android:textSize="24sp"
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="5dp"
@@ -112,7 +134,6 @@
                     android:id="@+id/inputRoundTeam1Score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnRoundDone"
                     android:layout_alignParentEnd="true"
                     android:textSize="24sp"
                     android:layout_marginEnd="5dp"

@@ -31,12 +31,20 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        initVariables();
+        initListeners();
+    }
+
+    private void initVariables() {
         mAuth = FirebaseAuth.getInstance();
         context = this;
-
         txtEmail = (EditText) findViewById(R.id.input_email);
         txtPassword = (EditText) findViewById(R.id.input_password);
         btnLogin = (Button) findViewById(R.id.btn_login);
+        txtSignUp = (TextView) findViewById(R.id.link_signup);
+    }
+
+    private void initListeners() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,16 +54,12 @@ public class LoginActivity extends AppCompatActivity {
                 login(txtEmail.getText().toString(), txtPassword.getText().toString());
             }
         });
-
-        txtSignUp = (TextView) findViewById(R.id.link_signup);
         txtSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
-
-
     }
 
     private void login(String email, String password){
@@ -82,6 +86,4 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 }

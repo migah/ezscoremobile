@@ -19,8 +19,4 @@ public class SportRepository {
     public List<Sport> getSports() {
         return sportGateway.getSports();
     }
-
-    public Sport[] getSportsArray() {
-        return sportGateway.getSports().toArray(new Sport[sportGateway.getSports().size()]);
-    }
 }

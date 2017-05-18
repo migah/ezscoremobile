@@ -52,6 +52,7 @@ public class NewMatchActivity extends AppCompatActivity {
     private Button btnLocation;
     private EditText input_team1;
     private EditText input_team2;
+    private TextView txtLocationAdded;
 
     private ListView drawerList;
 
@@ -64,6 +65,7 @@ public class NewMatchActivity extends AppCompatActivity {
     private int matchMinute;
 
     private MatchLocation location;
+    private GPSManager gpsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,23 +94,27 @@ public class NewMatchActivity extends AppCompatActivity {
         input_team2 = (EditText) findViewById(R.id.input_team2);
         drawerList = (ListView) findViewById(R.id.newMatchDrawer);
         btnLocation = (Button) findViewById(R.id.btnLocation);
+        txtLocationAdded = (TextView) findViewById(R.id.txtLocationAdded);
 
         location = null;
         context = this;
 
         drawerList = DrawerListStuff.initList(this,this, drawerList);
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
+
+        gpsManager = new GPSManager(context);
     }
 
     private void initListeners() {
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GPSManager gpsManager = new GPSManager(context);
                 String longitude = String.valueOf(gpsManager.getDeviceLocation().getLongitude());
                 String latitude = String.valueOf(gpsManager.getDeviceLocation().getLatitude());
                 location = new MatchLocation(latitude, longitude);
-                System.out.println(latitude + ", " + longitude);
+                btnLocation.setVisibility(View.GONE);
+                txtLocationAdded.setText("Location added");
+                txtLocationAdded.setVisibility(View.VISIBLE);
             }
         });
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +132,7 @@ public class NewMatchActivity extends AppCompatActivity {
 
                 String startTime = dateFormat.format(calendar.getTime());
 
-                Match match = new Match();
+                Match match;
 
                 if (location == null) {
                     match = new Match(creatorId,sport,team1, team2, startTime);
