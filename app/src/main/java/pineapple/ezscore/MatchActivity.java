@@ -1,11 +1,15 @@
 package pineapple.ezscore;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Locale;
 
 import Entities.Match;
 import Entities.Round;
@@ -25,9 +31,7 @@ import Utilities.ToolbarInitializer;
 public class MatchActivity extends AppCompatActivity {
 
     private DrawerLayout matchLayout;
-
     private Toolbar toolbar;
-
     private TextView txtTime;
     private TextView txtTeam1;
     private TextView txtTeam2;
@@ -35,6 +39,7 @@ public class MatchActivity extends AppCompatActivity {
     private TextView txtTeam2Score;
     private ListView listRounds;
     private ListView drawerList;
+    private Button btnLocation;
 
     private String matchKey;
     private Match match;
@@ -46,25 +51,9 @@ public class MatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
-        matchKey = (String) getIntent().getSerializableExtra("MatchKey");
-        matchRepository = new MatchRepository();
-
-        matchLayout = (DrawerLayout) findViewById(R.id.matchLayout);
-        toolbar = (Toolbar) findViewById(R.id.matchToolbar);
-        txtTime = (TextView) findViewById(R.id.txtTime);
-        txtTeam1 = (TextView) findViewById(R.id.txtTeam1);
-        txtTeam2 = (TextView) findViewById(R.id.txtTeam2);
-        txtTeam1Score = (TextView) findViewById(R.id.txtTeam1Score);
-        txtTeam2Score = (TextView) findViewById(R.id.txtTeam2Score);
-        listRounds = (ListView) findViewById(R.id.listRounds);
-        drawerList = (ListView) findViewById(R.id.matchViewDrawer);
-
-        context = this;
-
+        initVariables();
         setDatabaseReference();
-
-        toolbar = ToolbarInitializer.initToolbar(this, toolbar, matchLayout);
-        drawerList = DrawerListStuff.initList(this, this, drawerList);
+        initListeners();
     }
 
     private void setDatabaseReference() {
@@ -82,6 +71,10 @@ public class MatchActivity extends AppCompatActivity {
 
                 ArrayAdapter<Round> arrayAdapter = new ArrayAdapter<>(context, R.layout.custom_list_layout, match.getRounds());
                 listRounds.setAdapter(arrayAdapter);
+
+                if (match.getLocation() == null){
+                    btnLocation.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -90,4 +83,38 @@ public class MatchActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initListeners() {
+        btnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", match.getLocation().getLatitude(), match.getLocation().getLongitude());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    private void initVariables() {
+        context = this;
+
+        matchKey = (String) getIntent().getSerializableExtra("MatchKey");
+        matchRepository = new MatchRepository();
+        matchLayout = (DrawerLayout) findViewById(R.id.matchLayout);
+
+        toolbar = (Toolbar) findViewById(R.id.matchToolbar);
+        txtTime = (TextView) findViewById(R.id.txtTime);
+        txtTeam1 = (TextView) findViewById(R.id.txtTeam1);
+        txtTeam2 = (TextView) findViewById(R.id.txtTeam2);
+        txtTeam1Score = (TextView) findViewById(R.id.txtTeam1Score);
+        txtTeam2Score = (TextView) findViewById(R.id.txtTeam2Score);
+        listRounds = (ListView) findViewById(R.id.listRounds);
+        drawerList = (ListView) findViewById(R.id.matchViewDrawer);
+        btnLocation = (Button) findViewById(R.id.btnLocation);
+
+        toolbar = ToolbarInitializer.initToolbar(this, toolbar, matchLayout);
+        drawerList = DrawerListStuff.initList(this, this, drawerList);
+    }
+
+
 }
