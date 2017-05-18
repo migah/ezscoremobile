@@ -20,15 +20,9 @@ public class GPSManager {
     private Location deviceLocation;
     private LocationManager locationManager;
     private Context context;
-    private Activity activity;
 
-    public GPSManager(Context context, Activity activity) {
+    public GPSManager(Context context) {
         this.context = context;
-        this.activity = activity;
-
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
 
         LocationListener locationListener = new LocationListener() {
             @Override
@@ -59,8 +53,6 @@ public class GPSManager {
             deviceLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
     }
-
-
 
     public Location getDeviceLocation(){
         return deviceLocation;

@@ -19,9 +19,30 @@ public class Match implements Serializable{
     private String startTime;
     private Long team1Score;
     private Long team2Score;
+    private MatchLocation location;
 
     public Match() {
 
+    }
+
+    public Match(String creatorId, Sport sport, String team1, String team2, String startTime, MatchLocation location) {
+        this.creatorId = creatorId;
+        this.sport = sport;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.startTime = startTime;
+        this.location = location;
+
+        Round round = new Round();
+        round.setRoundNo(1);
+        round.setTeam1score(0);
+        round.setTeam2score(0);
+
+        isFinished = false;
+        rounds = new ArrayList<>();
+        rounds.add(round);
+        team1Score = Long.parseLong("0");
+        team2Score = Long.parseLong("0");
     }
 
     public Match(String creatorId, Sport sport, String team1, String team2, String startTime) {
@@ -30,6 +51,7 @@ public class Match implements Serializable{
         this.team1 = team1;
         this.team2 = team2;
         this.startTime = startTime;
+        this.location = null;
 
         Round round = new Round();
         round.setRoundNo(1);
@@ -123,5 +145,11 @@ public class Match implements Serializable{
         this.rounds = rounds;
     }
 
+    public MatchLocation getLocation() {
+        return location;
+    }
 
+    public void setLocation(MatchLocation location) {
+        this.location = location;
+    }
 }

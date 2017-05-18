@@ -1,12 +1,16 @@
 package pineapple.ezscore;
 
+import android.*;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,13 +52,11 @@ public class NewMatchActivity extends AppCompatActivity {
     Calendar myCalendar;
     TextView txtDate;
     Context context;
-    Activity activity;
     TextView txtTime;
     Button btnSubmit;
     Button btnLocation;
     EditText input_team1;
     EditText input_team2;
-
 
     ListView drawerList;
 
@@ -88,6 +90,10 @@ public class NewMatchActivity extends AppCompatActivity {
         drawerList = (ListView) findViewById(R.id.newMatchDrawer);
         btnLocation = (Button) findViewById(R.id.btnLocation);
 
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
         final ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sportRepository.getSports());
 
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -105,14 +111,12 @@ public class NewMatchActivity extends AppCompatActivity {
         });
 
         context = this;
-        activity = this;
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GPSManager gpsManager = new GPSManager(context, activity);
+                GPSManager gpsManager = new GPSManager(context);
                 System.out.println(gpsManager.getDeviceLocation());
-                //startActivity(new Intent(NewMatchActivity.this, MapsActivity.class));
             }
         });
 
