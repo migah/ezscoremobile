@@ -35,7 +35,7 @@ import Entities.MatchLocation;
 import Entities.Sport;
 import Repositories.MatchRepository;
 import Repositories.SportRepository;
-import Utilities.DrawerListStuff;
+import Utilities.ListDrawer;
 import Utilities.GPSManager;
 import Utilities.ToolbarInitializer;
 
@@ -101,7 +101,7 @@ public class NewMatchActivity extends AppCompatActivity {
         location = null;
         context = this;
 
-        drawerList = DrawerListStuff.initList(this,this, drawerList);
+        drawerList = ListDrawer.initList(this,this, drawerList);
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
 
         gpsManager = new GPSManager(context);

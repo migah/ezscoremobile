@@ -26,15 +26,15 @@ import pineapple.ezscore.R;
  * Created by rasmusmadsen on 15/05/2017.
  */
 
-public class DrawerListStuff {
+public class ListDrawer {
 
     private final static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     /**
      * Initialize the ListView attached to the Navigation Drawer and set OnItemClickListener to the ListView
-     * @param context
-     * @param activity
-     * @param listView
+     * @param context the context
+     * @param activity the activity to add a header to
+     * @param listView the listview to use in the drawer
      * @return listview with clicklistener attached
      */
     public static ListView initList(Context context, Activity activity, ListView listView) {
@@ -52,7 +52,7 @@ public class DrawerListStuff {
     /**
      * Returns an ArrayAdapter of strings with menu items, both for when a user is logged in
      * and when no user is logged in
-     * @param context
+     * @param context the context
      * @return arrayadapter of strings for the menu
      */
     private static ArrayAdapter<String> getAdapter(final Context context) {
@@ -70,7 +70,7 @@ public class DrawerListStuff {
 
     /**
      * Returns a clickListener on the Navigation Drawer for when menu is clicked made of switch-statements
-     * @param context
+     * @param context the context
      * @return clicklistener for Drawer Navigation
      */
     private static AdapterView.OnItemClickListener drawerClickListener(final Context context) {
@@ -102,7 +102,7 @@ public class DrawerListStuff {
 
     /**
      * Return a headerview for the navigation drawer
-     * @param context
+     * @param context the context
      * @return view for header
      */
     private static View getHeaderView(final Context context){
@@ -112,7 +112,7 @@ public class DrawerListStuff {
 
     /**
      * Set the username of the user logged in to the header
-     * @param activity
+     * @param activity the activity to add to
      */
     private static void setUserName(Activity activity){
         TextView txtUserEmail = (TextView) activity.findViewById(R.id.txtUserEmail);

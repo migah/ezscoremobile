@@ -73,8 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Registers a user with an email and a password
-     * @param email
-     * @param password
+     * @param email the email of the new user
+     * @param password the password of the new user
      */
     private void register(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)

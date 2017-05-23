@@ -25,7 +25,7 @@ public class GPSManager {
 
     /**
      * Constructor for GPSManager which gets the current location of the device
-     * @param context
+     * @param context the context
      */
     public GPSManager(Context context) {
         this.context = context;

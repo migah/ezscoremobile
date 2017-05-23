@@ -70,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Logs a user in with email and password
-     * @param email
-     * @param password
+     * @param email the email of the user
+     * @param password the password of the user
      */
     private void login(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)

@@ -24,7 +24,7 @@ import Entities.Match;
 import Entities.Round;
 import Repositories.MatchRepository;
 import Utilities.DateFormatter;
-import Utilities.DrawerListStuff;
+import Utilities.ListDrawer;
 import Utilities.ToolbarInitializer;
 
 public class MatchEditActivity extends AppCompatActivity {
@@ -66,7 +66,7 @@ public class MatchEditActivity extends AppCompatActivity {
         initVariables();
         fillInputs();
         initButtons();
-        drawerList = DrawerListStuff.initList(this, this, drawerList);
+        drawerList = ListDrawer.initList(this, this, drawerList);
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
     }
 
@@ -199,7 +199,7 @@ public class MatchEditActivity extends AppCompatActivity {
 
     /**
      * Updates the round
-     * @param roundNo
+     * @param roundNo the number of the round
      */
     private void updateRound(int roundNo) {
         match.getRounds().get(roundNo - 1).setTeam1score(Long.parseLong(inputRoundTeam1Score.getText().toString()));

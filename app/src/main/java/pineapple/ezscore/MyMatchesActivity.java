@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import Utilities.DrawerListStuff;
+import Utilities.ListDrawer;
 import Utilities.MatchAdapter;
 import Entities.Match;
 import Repositories.MatchRepository;
@@ -41,7 +41,7 @@ public class MyMatchesActivity extends AppCompatActivity {
 
         initVariables();
         initRecyclerView();
-        drawerList = DrawerListStuff.initList(this, this, drawerList);
+        drawerList = ListDrawer.initList(this, this, drawerList);
         initListeners();
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
         toolbar.inflateMenu(R.menu.add_match_toolbar);

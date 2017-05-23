@@ -20,7 +20,7 @@ public class DateFormatter {
 
     /**
      * Formats the date.
-     * @param match
+     * @param match the match the date belongs to
      * @return a string with the correct date
      */
     public static String getDate(Match match) {
@@ -38,9 +38,9 @@ public class DateFormatter {
 
     /**
      * Check if the match is live or not
-     * @param match
-     * @param returnString
-     * @param date
+     * @param match the match the date belongs to
+     * @param returnString the string to return, if match is upcoming
+     * @param date the date of the match
      * @return a string with match state on live or finished.
      */
     private static String getLive(Match match, String returnString, Date date) {
@@ -57,9 +57,9 @@ public class DateFormatter {
     }
 
     /**
-     * Check is the match is live, done or upcomming
-     * @param match
-     * @return a string with live, done og upcomming
+     * Check is the match is live, done or upcoming
+     * @param match the match, which states gets returned
+     * @return a string with live, done or upcoming
      */
     public static String getState(Match match) {
         switch (getDate(match)) {

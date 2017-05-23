@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import Entities.Match;
 import Utilities.DateFormatter;
-import Utilities.DrawerListStuff;
+import Utilities.ListDrawer;
 import Utilities.MatchAdapter;
 import Repositories.MatchRepository;
 import Utilities.MatchStates;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList = DrawerListStuff.initList(this, this, mDrawerList);
+        mDrawerList = ListDrawer.initList(this, this, mDrawerList);
 
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, drawerLayout);

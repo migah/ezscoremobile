@@ -19,13 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Locale;
-
 import Entities.Match;
 import Entities.Round;
 import Repositories.MatchRepository;
 import Utilities.DateFormatter;
-import Utilities.DrawerListStuff;
+import Utilities.ListDrawer;
 import Utilities.ToolbarInitializer;
 
 public class MatchActivity extends AppCompatActivity {
@@ -123,7 +121,7 @@ public class MatchActivity extends AppCompatActivity {
         btnLocation = (Button) findViewById(R.id.btnLocation);
 
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, matchLayout);
-        drawerList = DrawerListStuff.initList(this, this, drawerList);
+        drawerList = ListDrawer.initList(this, this, drawerList);
     }
 
 
