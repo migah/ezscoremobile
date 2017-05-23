@@ -56,6 +56,9 @@ public class MatchActivity extends AppCompatActivity {
         initListeners();
     }
 
+    /**
+     * Sets the matches database reference
+     */
     private void setDatabaseReference() {
         DatabaseReference databaseReference;
         databaseReference = FirebaseDatabase.getInstance().getReference("matches");
@@ -84,6 +87,9 @@ public class MatchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializes listeners
+     */
     private void initListeners() {
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +102,9 @@ public class MatchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializes the variables
+     */
     private void initVariables() {
         context = this;
 

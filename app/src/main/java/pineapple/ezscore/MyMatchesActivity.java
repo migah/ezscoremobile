@@ -47,6 +47,9 @@ public class MyMatchesActivity extends AppCompatActivity {
         toolbar.inflateMenu(R.menu.add_match_toolbar);
     }
 
+    /**
+     * Initializes the variables
+     */
     private void initVariables() {
         recyclerView = (RecyclerView) findViewById(R.id.myMatchList);
         drawerList = (ListView) findViewById(R.id.myMatchDrawer);
@@ -58,6 +61,9 @@ public class MyMatchesActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("matches");
     }
 
+    /**
+     * Initializes the recyclerView
+     */
     private void initRecyclerView() {
         myMatches.clear();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -69,6 +75,9 @@ public class MyMatchesActivity extends AppCompatActivity {
         recyclerView.setAdapter(new MatchAdapter(this, myMatches));
     }
 
+    /**
+     * Initializes listeners
+     */
     private void initListeners() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

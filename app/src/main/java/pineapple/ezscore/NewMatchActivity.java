@@ -76,7 +76,9 @@ public class NewMatchActivity extends AppCompatActivity {
         initSpinner();
         initListeners();
     }
-
+    /**
+     * Initializes the variables
+     */
     private void initVariables() {
         sportRepository = new SportRepository();
         matchRepository = new MatchRepository();
@@ -105,6 +107,9 @@ public class NewMatchActivity extends AppCompatActivity {
         gpsManager = new GPSManager(context);
     }
 
+    /**
+     * Initializes listeners
+     */
     private void initListeners() {
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +196,9 @@ public class NewMatchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializes the spinner
+     */
     private void initSpinner() {
         final ArrayAdapter<Sport> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sportRepository.getSports());
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -207,12 +215,18 @@ public class NewMatchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks for and requests ACCESS_FINE_LOCATION permission
+     */
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
 
+    /**
+     * Updates the date label
+     */
     private void updateLabel() {
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);

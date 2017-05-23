@@ -34,13 +34,26 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        initVariables();
+        initListeners();
+    }
+
+    /**
+     * Initializes the variables
+     */
+    private void initVariables() {
         mAuth = FirebaseAuth.getInstance();
         txtEmail = (EditText) findViewById(R.id.input_email);
         txtPassword = (EditText) findViewById(R.id.input_password);
         btnSignUp = (Button) findViewById(R.id.btn_signup);
         txtLogin = (TextView) findViewById(R.id.link_login);
         context = this;
+    }
 
+    /**
+     * Initializes listeners
+     */
+    private void initListeners() {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +71,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Registers a user with an email and a password
+     * @param email
+     * @param password
+     */
     private void register(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

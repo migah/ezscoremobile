@@ -33,6 +33,11 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
     private FirebaseAuth firebaseAuth;
     private MatchRepository matchRepository;
 
+    /**
+     * Contstruct the MatchAdapter
+     * @param context the context
+     * @param _lMatches the list of matches to adapt
+     */
     public MatchAdapter (Context context, List<Match> _lMatches) {
         this.lMatches = _lMatches;
         this.context = context;
@@ -40,17 +45,32 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         matchRepository = new MatchRepository();
     }
 
+    /**
+     * Returns the size of the list
+     * @return the item count as an int
+     */
     @Override
     public int getItemCount() {
         return lMatches.size();
     }
 
+    /**
+     * Initiates a view with the Card Layout and attaches it to a holder.
+     * @param parent the parent, to get the context from.
+     * @param viewType viewType
+     * @return the MatchViewHolder
+     */
     @Override
     public MatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
         return new MatchViewHolder(v);
     }
 
+    /**
+     * Binds the data to the Card Layouts widgets
+     * @param holder the holder to bind to
+     * @param position the position of the current match to adapt
+     */
     @Override
     public void onBindViewHolder(MatchViewHolder holder, final int position) {
         holder.team1.setText(lMatches.get(position).getTeam1());
@@ -114,6 +134,9 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     * The MatchViewHolder class
+     */
     public static class MatchViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView team1;
@@ -122,6 +145,10 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         TextView team2Score;
         ImageView img;
 
+        /**
+         * Initializes holder
+         * @param itemView the View to get the widgets from
+         */
         MatchViewHolder(View itemView) {
             super (itemView);
             cv = (CardView) itemView.findViewById(R.id.card_view);

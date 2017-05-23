@@ -70,6 +70,9 @@ public class MatchEditActivity extends AppCompatActivity {
         toolbar = ToolbarInitializer.initToolbar(this, toolbar, layout);
     }
 
+    /**
+     * Initializes the variables
+     */
     private void initVariables() {
         layout = (DrawerLayout) findViewById(R.id.matchLayout);
         toolbar = (Toolbar) findViewById(R.id.matchToolbar);
@@ -97,6 +100,9 @@ public class MatchEditActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("matches");
     }
 
+    /**
+     * Fills inputs and labels with match data
+     */
     private void fillInputs() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,6 +126,9 @@ public class MatchEditActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializes listeners for the buttons
+     */
     private void initButtons() {
         btnUpdateMatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,6 +187,9 @@ public class MatchEditActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Updates the match
+     */
     private void updateMatch() {
         match.setTeam1Score(Long.parseLong(inputTeam1Score.getText().toString()));
         match.setTeam2Score(Long.parseLong(inputTeam2Score.getText().toString()));
@@ -185,6 +197,10 @@ public class MatchEditActivity extends AppCompatActivity {
         startActivity(new Intent(MatchEditActivity.this, MyMatchesActivity.class));
     }
 
+    /**
+     * Updates the round
+     * @param roundNo
+     */
     private void updateRound(int roundNo) {
         match.getRounds().get(roundNo - 1).setTeam1score(Long.parseLong(inputRoundTeam1Score.getText().toString()));
         match.getRounds().get(roundNo - 1).setTeam2score(Long.parseLong(inputRoundTeam2Score.getText().toString()));

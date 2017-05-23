@@ -35,6 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         initListeners();
     }
 
+    /**
+     * Initializes the variables
+     */
     private void initVariables() {
         mAuth = FirebaseAuth.getInstance();
         context = this;
@@ -44,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         txtSignUp = (TextView) findViewById(R.id.link_signup);
     }
 
+    /**
+     * Initializes listeners
+     */
     private void initListeners() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +68,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Logs a user in with email and password
+     * @param email
+     * @param password
+     */
     private void login(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

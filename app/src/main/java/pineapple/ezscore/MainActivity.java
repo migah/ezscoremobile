@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         initListeners();
     }
 
+    /**
+     * Checks if a logout boolean was sent with the intent and signs out if the boolean is true.
+     */
     private void checkSignOut() {
         mAuth = FirebaseAuth.getInstance();
         if (getIntent().getSerializableExtra("logout") != null && (boolean) getIntent().getSerializableExtra("logout")) {
@@ -56,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Initializes the variables
+     */
     private void initVariables() {
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
@@ -76,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         matchState = MatchStates.ALL;
     }
 
+    /**
+     * Initializes the databaseReference
+     */
     private void initDatabaseReference() {
         ArrayList<Match> matches = new ArrayList<>();
 
@@ -95,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adbMatch);
     }
 
+    /**
+     * Initializes listeners
+     */
     private void initListeners() {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
