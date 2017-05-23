@@ -20,6 +20,10 @@ public class MatchGateway {
     private DatabaseReference databaseReference;
     private ArrayList<Match> matches;
 
+    /**
+     * Constructor with database reference connection, adds all matches from "matches" table in Firebase
+     * to "matches" ArrayList.
+     */
     public MatchGateway() {
         databaseReference = FirebaseDatabase.getInstance().getReference("matches");
         matches = new ArrayList<>();
@@ -41,18 +45,35 @@ public class MatchGateway {
         });
     }
 
+    /**
+     * Returns all matches.
+     * @return ArrayList of Matches
+     */
     public ArrayList<Match> getMatches() {
         return matches;
     }
 
+    /**
+     * Add a match to the database.
+     * @param match
+     */
     public void addMatch(Match match) {
         databaseReference.child(databaseReference.push().getKey()).setValue(match);
     }
 
+    /**
+     * Updates a match in the database.
+     * @param match
+     * @param matchId
+     */
     public void updateMatch(Match match, String matchId) {
         databaseReference.child(matchId).setValue(match);
     }
 
+    /**
+     * Removes a match in the database.
+     * @param matchId
+     */
     public void removeMatch(String matchId) {
         databaseReference.child(matchId).removeValue();
     }

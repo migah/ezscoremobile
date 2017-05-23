@@ -30,6 +30,13 @@ public class DrawerListStuff {
 
     private final static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+    /**
+     * Initialize the ListView attached to the Navigation Drawer and set OnItemClickListener to the ListView
+     * @param context
+     * @param activity
+     * @param listView
+     * @return listview with clicklistener attached
+     */
     public static ListView initList(Context context, Activity activity, ListView listView) {
         listView.setAdapter(getAdapter(context));
         listView.setOnItemClickListener(drawerClickListener(context));
@@ -42,6 +49,12 @@ public class DrawerListStuff {
         return listView;
     }
 
+    /**
+     * Returns an ArrayAdapter of strings with menu items, both for when a user is logged in
+     * and when no user is logged in
+     * @param context
+     * @return arrayadapter of strings for the menu
+     */
     private static ArrayAdapter<String> getAdapter(final Context context) {
         FirebaseUser user = mAuth.getCurrentUser();
         String[] menuItems;
@@ -55,6 +68,11 @@ public class DrawerListStuff {
         return new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, menuItems);
     }
 
+    /**
+     * Returns a clickListener on the Navigation Drawer for when menu is clicked made of switch-statements
+     * @param context
+     * @return clicklistener for Drawer Navigation
+     */
     private static AdapterView.OnItemClickListener drawerClickListener(final Context context) {
         return new AdapterView.OnItemClickListener() {
             @Override
@@ -82,11 +100,20 @@ public class DrawerListStuff {
         };
     }
 
+    /**
+     * Return a headerview for the navigation drawer
+     * @param context
+     * @return view for header
+     */
     private static View getHeaderView(final Context context){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return inflater.inflate(R.layout.header_view, null, false);
     }
 
+    /**
+     * Set the username of the user logged in to the header
+     * @param activity
+     */
     private static void setUserName(Activity activity){
         TextView txtUserEmail = (TextView) activity.findViewById(R.id.txtUserEmail);
         if (mAuth.getCurrentUser() != null) {

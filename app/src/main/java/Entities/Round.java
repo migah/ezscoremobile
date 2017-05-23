@@ -12,8 +12,17 @@ public class Round implements Serializable {
     private long team1score;
     private long team2score;
 
-    public Round() {}
+    /**
+     * Empty constructor for round.
+     */
+    public Round() {
 
+    }
+
+    /**
+     * Constructor for round.
+     * @param roundNo
+     */
     public Round(long roundNo) {
         this.roundNo = roundNo;
         team1score = 0;

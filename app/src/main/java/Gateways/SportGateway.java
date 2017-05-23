@@ -19,6 +19,10 @@ public class SportGateway {
     private DatabaseReference datebaseReference;
     private ArrayList<Sport> sports;
 
+    /**
+     * Constructor with database reference connection, adds all matches from "sport" table in Firebase
+     * to "sports" ArrayList.
+     */
     public SportGateway(){
         datebaseReference = FirebaseDatabase.getInstance().getReference("sport");
         sports = new ArrayList<>();
@@ -40,6 +44,10 @@ public class SportGateway {
         });
     }
 
+    /**
+     * Returns an ArrayList of sports.
+     * @return ArrayList of sport.
+     */
     public ArrayList<Sport> getSports() {
         return sports;
     }

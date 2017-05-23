@@ -8,9 +8,17 @@ public class MatchLocation {
     private String latitude;
     private String longitude;
 
+    /**
+     * Empty constructor for matchlocation.
+     */
     public MatchLocation() {
     }
 
+    /**
+     * Constructor for matchlocation.
+     * @param latitude
+     * @param longitude
+     */
     public MatchLocation(String latitude, String longitude) {
         this.latitude = latitude;
         this.longitude = longitude;

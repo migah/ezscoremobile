@@ -8,6 +8,8 @@ import java.util.List;
  * Created by rasmusmadsen on 06/04/2017.
  */
 
+
+
 public class Match implements Serializable{
     private String id;
     private String creatorId;
@@ -21,10 +23,22 @@ public class Match implements Serializable{
     private Long team2Score;
     private MatchLocation location;
 
+    /**
+     * Empty constructor for match.
+     */
     public Match() {
 
     }
 
+    /**
+     * Constructor for match with location.
+     * @param creatorId
+     * @param sport
+     * @param team1
+     * @param team2
+     * @param startTime
+     * @param location
+     */
     public Match(String creatorId, Sport sport, String team1, String team2, String startTime, MatchLocation location) {
         this.creatorId = creatorId;
         this.sport = sport;
@@ -45,6 +59,14 @@ public class Match implements Serializable{
         team2Score = Long.parseLong("0");
     }
 
+    /**
+     * Constructor for match without a location.
+     * @param creatorId
+     * @param sport
+     * @param team1
+     * @param team2
+     * @param startTime
+     */
     public Match(String creatorId, Sport sport, String team1, String team2, String startTime) {
         this.creatorId = creatorId;
         this.sport = sport;

@@ -23,6 +23,10 @@ public class GPSManager {
 
     private static final String TIME = "10000";
 
+    /**
+     * Constructor for GPSManager which gets the current location of the device
+     * @param context
+     */
     public GPSManager(Context context) {
         this.context = context;
 
@@ -34,16 +38,28 @@ public class GPSManager {
         }
     }
 
+    /**
+     * Returns the current location
+     * @return current location
+     */
     public Location getDeviceLocation(){
         return deviceLocation;
     }
 
+    /**
+     * Check permission for the device to access to the GPS
+     * @return permission for accesing the GPS on a device
+     */
     private boolean checkPermission(){
         String permission = "android.permission.ACCESS_FINE_LOCATION";
         int res = context.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
     }
 
+    /**
+     * A listener for when a location has changed
+     * @return locationlistner
+     */
     private LocationListener getLocationListenter() {
         return new LocationListener() {
             @Override

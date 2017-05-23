@@ -18,6 +18,11 @@ public class DateFormatter {
     private static final String LIVE = "Live!";
     private static final String FINISHED = "Finished";
 
+    /**
+     * Formats the date.
+     * @param match
+     * @return a string with the correct date
+     */
     public static String getDate(Match match) {
         String returnString = "";
         Date date = null;
@@ -31,6 +36,13 @@ public class DateFormatter {
         return getLive(match, returnString, date);
     }
 
+    /**
+     * Check if the match is live or not
+     * @param match
+     * @param returnString
+     * @param date
+     * @return a string with match state on live or finished.
+     */
     private static String getLive(Match match, String returnString, Date date) {
         Date dateNow = new Date();
 
@@ -44,6 +56,11 @@ public class DateFormatter {
         return returnString;
     }
 
+    /**
+     * Check is the match is live, done or upcomming
+     * @param match
+     * @return a string with live, done og upcomming
+     */
     public static String getState(Match match) {
         switch (getDate(match)) {
             case LIVE:
