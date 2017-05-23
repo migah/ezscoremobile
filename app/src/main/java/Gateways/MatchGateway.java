@@ -55,7 +55,7 @@ public class MatchGateway {
 
     /**
      * Add a match to the database.
-     * @param match
+     * @param match to be added
      */
     public void addMatch(Match match) {
         databaseReference.child(databaseReference.push().getKey()).setValue(match);
@@ -63,8 +63,8 @@ public class MatchGateway {
 
     /**
      * Updates a match in the database.
-     * @param match
-     * @param matchId
+     * @param match to be updated
+     * @param matchId id of the match to be updated
      */
     public void updateMatch(Match match, String matchId) {
         databaseReference.child(matchId).setValue(match);
@@ -72,7 +72,7 @@ public class MatchGateway {
 
     /**
      * Removes a match in the database.
-     * @param matchId
+     * @param matchId of the match to be deleted
      */
     public void removeMatch(String matchId) {
         databaseReference.child(matchId).removeValue();

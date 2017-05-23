@@ -29,7 +29,7 @@ public class MatchRepository {
 
     /**
      * Gets one match from MatchGateway
-     * @param $key
+     * @param $key of the match to find
      * @return one match from database
      */
     public Match getMatch(String $key) {
@@ -42,7 +42,7 @@ public class MatchRepository {
 
     /**
      * Adds a match to the database through the MatchGateway
-     * @param match
+     * @param match to be added
      */
     public void addMatch(Match match) {
         match.getSport().setId(null);
@@ -51,7 +51,7 @@ public class MatchRepository {
 
     /**
      * Updates a match in the datbase through MatchGateway
-     * @param match
+     * @param match to be updated
      */
     public void updateMatch(Match match) {
         String matchId = match.getId();
@@ -62,7 +62,7 @@ public class MatchRepository {
 
     /**
      * Remove one match from the databse through MatchGateway
-     * @param matchId
+     * @param matchId id of match to be removed
      */
     public void removeMatch(String matchId) {
         mg.removeMatch(matchId);

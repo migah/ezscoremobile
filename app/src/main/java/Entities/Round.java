@@ -21,7 +21,7 @@ public class Round implements Serializable {
 
     /**
      * Constructor for round.
-     * @param roundNo
+     * @param roundNo round number of the match.
      */
     public Round(long roundNo) {
         this.roundNo = roundNo;

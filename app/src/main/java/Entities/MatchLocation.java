@@ -16,8 +16,8 @@ public class MatchLocation {
 
     /**
      * Constructor for matchlocation.
-     * @param latitude
-     * @param longitude
+     * @param latitude latitude of a match
+     * @param longitude longitude of a match
      */
     public MatchLocation(String latitude, String longitude) {
         this.latitude = latitude;

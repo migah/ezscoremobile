@@ -32,12 +32,12 @@ public class Match implements Serializable{
 
     /**
      * Constructor for match with location.
-     * @param creatorId
-     * @param sport
-     * @param team1
-     * @param team2
-     * @param startTime
-     * @param location
+     * @param creatorId id on the creator of a match
+     * @param sport the sport of the match
+     * @param team1 teamname of the first team
+     * @param team2 teamname of the second team
+     * @param startTime starttime of the match
+     * @param location location of the match
      */
     public Match(String creatorId, Sport sport, String team1, String team2, String startTime, MatchLocation location) {
         this.creatorId = creatorId;
@@ -61,11 +61,11 @@ public class Match implements Serializable{
 
     /**
      * Constructor for match without a location.
-     * @param creatorId
-     * @param sport
-     * @param team1
-     * @param team2
-     * @param startTime
+     * @param creatorId id on the creator of a match
+     * @param sport the sport of the match
+     * @param team1 teamname of the first team
+     * @param team2 teamname of the second team
+     * @param startTime starttime of the match
      */
     public Match(String creatorId, Sport sport, String team1, String team2, String startTime) {
         this.creatorId = creatorId;
