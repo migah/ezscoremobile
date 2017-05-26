@@ -1,7 +1,10 @@
 package pineapple.ezscore;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -74,7 +77,7 @@ public class MatchEditActivity extends AppCompatActivity {
      * Initializes the variables
      */
     private void initVariables() {
-        layout = (DrawerLayout) findViewById(R.id.matchLayout);
+        layout = (DrawerLayout) findViewById(R.id.matchEditLayout);
         toolbar = (Toolbar) findViewById(R.id.matchToolbar);
         txtTime = (TextView) findViewById(R.id.txtTime);
         txtTeam1 = (TextView) findViewById(R.id.inputTeam1);
@@ -117,6 +120,9 @@ public class MatchEditActivity extends AppCompatActivity {
                 txtRoundTeam2.setText(match.getTeam2());
 
                 listRounds.setAdapter(new ArrayAdapter<Round>(MatchEditActivity.this, android.R.layout.simple_list_item_1, match.getRounds()));
+                if (match.getisFinished()) {
+                    btnMatchDone.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -151,7 +157,9 @@ public class MatchEditActivity extends AppCompatActivity {
                 round = new Round(i);
                 roundNo = round.getRoundNo();
                 match.getRounds().add(round);
-                matchRepository.updateMatch(match);
+                inputRoundTeam1Score.setText(0 + "");
+                inputRoundTeam2Score.setText(0 + "");
+                updateRound((int)roundNo);
             }
         });
         btnUpdateRound.setOnClickListener(new View.OnClickListener() {
@@ -165,13 +173,29 @@ public class MatchEditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 btnAddRound.setVisibility(View.VISIBLE);
                 roundLayout.setVisibility(View.GONE);
+                updateRound((int) roundNo);
             }
         });
         btnMatchDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                match.setisFinished(true);
-                updateMatch();
+                new AlertDialog.Builder(MatchEditActivity.this)
+                        .setTitle("Are you sure you want to end the match?")
+                        .setMessage("This cannot be undone")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                match.setisFinished(true);
+                                updateMatch();
+                                startActivity(new Intent(MatchEditActivity.this, MyMatchesActivity.class));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
             }
         });
         listRounds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -194,7 +218,7 @@ public class MatchEditActivity extends AppCompatActivity {
         match.setTeam1Score(Long.parseLong(inputTeam1Score.getText().toString()));
         match.setTeam2Score(Long.parseLong(inputTeam2Score.getText().toString()));
         matchRepository.updateMatch(match);
-        startActivity(new Intent(MatchEditActivity.this, MyMatchesActivity.class));
+        Snackbar.make(layout, "Match updated", 2000).show();
     }
 
     /**
@@ -204,7 +228,7 @@ public class MatchEditActivity extends AppCompatActivity {
     private void updateRound(int roundNo) {
         match.getRounds().get(roundNo - 1).setTeam1score(Long.parseLong(inputRoundTeam1Score.getText().toString()));
         match.getRounds().get(roundNo - 1).setTeam2score(Long.parseLong(inputRoundTeam2Score.getText().toString()));
-        matchRepository.updateMatch(match);
+        updateMatch();
     }
 
 }

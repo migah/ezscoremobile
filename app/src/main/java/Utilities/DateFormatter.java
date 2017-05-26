@@ -12,7 +12,7 @@ import Entities.Match;
 
 public class DateFormatter {
 
-    private static SimpleDateFormat formattedDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+    private static SimpleDateFormat formattedDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
     private static SimpleDateFormat prettyDateFormatter = new SimpleDateFormat("EEEE dd/MM HH:mm");
 
     private static final String LIVE = "Live!";
@@ -24,8 +24,10 @@ public class DateFormatter {
      * @return a string with the correct date
      */
     public static String getDate(Match match) {
+        if (match == null)
+            return "";
         String returnString = "";
-        Date date = null;
+        Date date;
         try {
             date = formattedDateFormatter.parse(match.getStartTime());
             returnString = prettyDateFormatter.format(date);
@@ -46,10 +48,10 @@ public class DateFormatter {
     private static String getLive(Match match, String returnString, Date date) {
         Date dateNow = new Date();
 
-        if (match.getisFinished()) {
+        if (!match.getisFinished() && date.before(dateNow)) {
             return LIVE;
         }
-        if (date.before(dateNow)) {
+        if (match.getisFinished()) {
             return FINISHED;
         }
 

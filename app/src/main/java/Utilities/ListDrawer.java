@@ -59,11 +59,9 @@ public class ListDrawer {
         FirebaseUser user = mAuth.getCurrentUser();
         String[] menuItems;
         if (user == null) {
-            String[] mMenuItems = {"All Matches", "Login"};
-            menuItems = mMenuItems;
+            menuItems = new String[]{"All Matches", "Login"};
         } else {
-            String[] mMenuItems = {"All Matches", "My Matches", "Logout"};
-            menuItems = mMenuItems;
+            menuItems = new String[]{"All Matches", "My Matches", "Logout"};
         }
         return new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, menuItems);
     }
@@ -77,24 +75,26 @@ public class ListDrawer {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (adapterView.getItemAtPosition(i).toString().toLowerCase()) {
-                    case "all matches":
-                        context.startActivity(new Intent(context, MainActivity.class));
-                        break;
-                    case "my matches":
-                        context.startActivity(new Intent(context, MyMatchesActivity.class));
-                        break;
-                    case "logout":
-                        Intent intent = new Intent(context, MainActivity.class);
-                        intent.putExtra("logout", true);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        context.startActivity(intent);
-                        break;
-                    case "login":
-                        context.startActivity(new Intent(context, LoginActivity.class));
-                        break;
-                    default:
-                        break;
+                if (adapterView.getItemAtPosition(i) != null) {
+                    switch (adapterView.getItemAtPosition(i).toString().toLowerCase()) {
+                        case "all matches":
+                            context.startActivity(new Intent(context, MainActivity.class));
+                            break;
+                        case "my matches":
+                            context.startActivity(new Intent(context, MyMatchesActivity.class));
+                            break;
+                        case "logout":
+                            Intent intent = new Intent(context, MainActivity.class);
+                            intent.putExtra("logout", true);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            context.startActivity(intent);
+                            break;
+                        case "login":
+                            context.startActivity(new Intent(context, LoginActivity.class));
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         };

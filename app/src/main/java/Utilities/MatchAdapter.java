@@ -83,6 +83,13 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
                 break;
             case "cs:go":
                 holder.img.setImageResource(R.mipmap.csgo);
+                break;
+            case "basket":
+                holder.img.setImageResource(R.mipmap.basket);
+                break;
+            case "hockey":
+                holder.img.setImageResource(R.mipmap.hockey);
+                break;
         }
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -67,7 +67,9 @@ public class MatchGateway {
      * @param matchId id of the match to be updated
      */
     public void updateMatch(Match match, String matchId) {
-        databaseReference.child(matchId).setValue(match);
+        if (match != null && matchId != null) {
+                databaseReference.child(matchId).setValue(match);
+        }
     }
 
     /**

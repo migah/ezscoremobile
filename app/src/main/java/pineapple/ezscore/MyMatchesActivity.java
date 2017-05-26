@@ -68,7 +68,7 @@ public class MyMatchesActivity extends AppCompatActivity {
         myMatches.clear();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         for (Match match : matchRepository.getMatches()) {
-            if (match.getCreatorId().equals(firebaseAuth.getCurrentUser().getUid())) {
+            if (firebaseAuth.getCurrentUser() != null && match.getCreatorId().equals(firebaseAuth.getCurrentUser().getUid())) {
                 myMatches.add(match);
             }
         }
